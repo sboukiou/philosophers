@@ -8,9 +8,9 @@
     to demonstrate concurrency control, resource management, and synchronization techniques.
     The project requires the use of C programming language and multithreading
     to implement a solution that prevents deadlocks and resource conflicts`
-____
+___
 :bulb: ***Here are the things you need to know about  this assignment:***
-
+<img height=400 src='https://imgs.search.brave.com/6xeZZXiOoPk1PJufJp-c8iyQ5c0pt74ue7hIhz2amDs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy83/LzdiL0FuX2lsbHVz/dHJhdGlvbl9vZl90/aGVfZGluaW5nX3Bo/aWxvc29waGVyc19w/cm9ibGVtLnBuZw'>
 ```
 • One or more philosophers sit at a round table.
 There is a large bowl of spaghetti in the middle of the table.
@@ -29,4 +29,4 @@ a philosopher dies of starvation.
 • Philosophers don’t know if another philosopher is about to die.
 • No need to say that philosophers should avoid dying!
 ```
-____
+___

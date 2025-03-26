@@ -1,7 +1,7 @@
 CC=cc -o
 CFLAGS=-Wall -Werror -Wextra
 NAME=philo
-SOURCES=main.c
+SOURCES=main.c args_checker.c
 OBJS=$(SOURCES:%.c=%.o)
 RM=rm -f
 
