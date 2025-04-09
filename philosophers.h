@@ -18,24 +18,36 @@
 # include <unistd.h>
 # include <limits.h>
 
+#include "./Deps/deps.h"
+
 # define FAIL -1
 # define SUCCESS 0
 
-typedef struct s_philo_data
+enum	e_status
 {
-	int	number_of_philos;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	times_each_must_eat;
-	pthread_t	*philosophers;
-}	t_philo_data;
+	THINKING,
+	EATING,
+	SLEEPING
+};
 
 typedef struct s_philosopher
 {
-	int	left_fork;
-	int	right_fork;
+	int		left_fork;
+	int		right_fork;
+	int		id;
+	enum e_status	status;
+	pthread_t	thread;
 }	t_philosopher;
+
+typedef struct s_philo_data
+{
+	int		number_of_philos;
+	int		time_to_die;
+	int		time_to_eat;
+	int		time_to_sleep;
+	int		times_each_must_eat;
+	t_philosopher	*philos;
+}	t_philo_data;
 
 t_philo_data	*args_checker(int ac, char **av);
 #endif
