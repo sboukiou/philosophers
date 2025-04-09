@@ -1,17 +1,38 @@
-CC=cc -o
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: sboukiou <your@mail.com>                   +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/04/09 13:57:32 by sboukiou          #+#    #+#              #
+#    Updated: 2025/04/09 13:58:37 by sboukiou         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+CC=cc
+RM=rm -f
 CFLAGS=-Wall -Werror -Wextra -pthread
 NAME=philo
+
 SOURCES=main.c args_checker.c
 OBJS=$(SOURCES:%.c=%.o)
-RM=rm -f
+
+DEPS_SOURCES=./Deps/atoi.c ./Deps/isdigit.c
+DEPS_OBJS=$(DEPS_SOURCES:%.c=%.o)
+
+OBJS_ALL=$(OBJS) $(DEPS_OBJS)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(NAME) $(CFLAGS) $(SOURCES)
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME): $(OBJS_ALL)
+	$(CC) -o $(NAME) $(CFLAGS) $(OBJS_ALL)
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS_ALL)
 
 fclean: clean
 	$(RM) $(NAME)
