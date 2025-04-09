@@ -1,5 +1,5 @@
 CC=cc -o
-CFLAGS=-Wall -Werror -Wextra
+CFLAGS=-Wall -Werror -Wextra -pthread
 NAME=philo
 SOURCES=main.c args_checker.c
 OBJS=$(SOURCES:%.c=%.o)
