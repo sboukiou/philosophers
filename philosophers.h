@@ -39,7 +39,7 @@ typedef struct s_philosopher
 	pthread_t	thread;
 }	t_philosopher;
 
-typedef struct s_philo_data
+typedef struct s_program_info
 {
 	int		number_of_philos;
 	int		time_to_die;
@@ -47,7 +47,7 @@ typedef struct s_philo_data
 	int		time_to_sleep;
 	int		times_each_must_eat;
 	t_philosopher	*philos;
-}	t_philo_data;
+}	t_program_info;
 
-t_philo_data	*args_checker(int ac, char **av);
+t_program_info	*args_checker(int ac, char **av);
 #endif
