@@ -8,5 +8,8 @@
 # include <limits.h>
 int	_isdigit(int c);
 int	_atoi(const char *nptr);
+size_t	_strlen(const char *str);
+void	print_info(char *info);
+void	print_error(char *error);
 
 #endif

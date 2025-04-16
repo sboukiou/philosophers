@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sboukiou <sboukiou@1337.ma>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 08:44:15 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/07 14:37:52 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:30:00 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
-# include <stdio.h>
-# include <pthread.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <limits.h>
+#ifndef PHILO_H
+# define PHILO_H
+# include <stdio.h> /* For printf */
+# include <pthread.h> /* For posix threads | creation, monitor, join, mutexs, lock & unlock*/
+# include <stdlib.h> /* For malloc, Free */
+# include <unistd.h> /* For write, usleep */
+# include <limits.h> /* INT_MIN & INT_MAX */
 
 #include "./Deps/deps.h"
 
 # define FAIL -1
 # define SUCCESS 0
 
+# define UNUSED 0
+# define USED 1
 enum	e_status
 {
 	THINKING,
@@ -32,22 +34,19 @@ enum	e_status
 
 typedef struct s_philosopher
 {
-	int		left_fork;
-	int		right_fork;
 	int		id;
 	enum e_status	status;
-	pthread_t	thread;
+	pthread_t	thread_id;
 }	t_philosopher;
 
-typedef struct s_program_info
+/*[DATA]: ./philo 8 200 200 150 [100]*/
+typedef struct s_program
 {
-	int		number_of_philos;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		times_each_must_eat;
-	t_philosopher	*philos;
-}	t_program_info;
-
-t_program_info	*args_checker(int ac, char **av);
+	int	philo_count;
+	int	life_time;
+	int	eating_period;
+	int	sleep_period;
+	int	meals_count;
+	int	*forks;
+}	t_program;
 #endif

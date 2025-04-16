@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 18:21:48 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/16 18:39:29 by sboukiou         ###   ########.fr       */
+/*   Created: 2025/04/15 13:22:20 by sboukiou          #+#    #+#             */
+/*   Updated: 2025/04/16 18:35:51 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./philo.h"
-#include "./Deps/deps.h"
+#include "philo.h"
 
-int main(void)
+t_program	*parser(t_program *program, int ac, char **av)
 {
-	print_info("info to be printed");
-	print_error("Failed to init the program");
-	return (0);
+	(void)program;
+	(void)ac;
+	(void)av;
+	return (NULL);
 }
