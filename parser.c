@@ -12,10 +12,39 @@
 
 #include "philo.h"
 
-t_program	*parser(t_program *program, int ac, char **av)
+/*[DATA]: ./philo [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat]*/
+t_program	*parser(int ac, char **av)
 {
-	(void)program;
-	(void)ac;
-	(void)av;
-	return (NULL);
+	t_program	*program;
+
+	if (ac != 5 && ac != 6)
+	{
+		print_error("Number of arguments is incorrect");
+		print_info("Usage: ./philo number_of_philos time_to_eat time_to_sleep tim_to_die [number_of_meals]");
+		exit(0);
+	}
+	if (_atoi(av[1]) < 2 || _atoi(av[2]) < 1  ||
+		_atoi(av[3]) < 1 || _atoi(av[4]) < 2)
+	{
+		print_error("Invalid arguments given ! Try again");
+		exit(0);
+	}
+	if (ac == 6 && _atoi(av[5]) < 1)
+	{
+		print_error("Invalid arguments given ! Try again");
+		exit(0);
+	}
+	program = (t_program *)malloc(sizeof(t_program));
+	if (!program)
+	{
+		print_error("Failed to allocate resources !");
+		exit(0);
+	}
+	program->philo_count = _atoi(av[1]);
+	program->time_to_die = _atoi(av[2]);
+	program->time_to_eat = _atoi(av[3]);
+	program->time_to_sleep = _atoi(av[4]);
+	if (ac == 6)
+		program->number_of_meals = _atoi(av[5]);
+	return (program);
 }
