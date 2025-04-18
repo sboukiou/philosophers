@@ -6,7 +6,7 @@
 /*   By: sboukiou <sboukiou@1337.ma>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 08:44:15 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/15 13:30:00 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:53:50 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h> /* For malloc, Free */
 # include <unistd.h> /* For write, usleep */
 # include <limits.h> /* INT_MIN & INT_MAX */
+#include <sys/time.h> /* For gettimeofday & settimeofday */
 
 #include "./Deps/deps.h"
 
@@ -43,10 +44,20 @@ typedef struct s_philosopher
 typedef struct s_program
 {
 	int	philo_count;
-	int	life_time;
-	int	eating_period;
-	int	sleep_period;
-	int	meals_count;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	number_of_meals;
 	int	*forks;
 }	t_program;
+
+/* Prototyeps for time functions */
+int	ft_usleep(int time);
+
+/* Parsing functions */
+t_program	*parser(int ac, char **av);
+
+/* Cleanup functions */
+void	cleanup(t_program *program);
+
 #endif
