@@ -6,12 +6,10 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:30:18 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/16 18:40:32 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/18 20:18:27 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
 #include "./deps.h"
 
 #define RESET "\033[0m"
