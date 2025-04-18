@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:57:16 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/18 19:55:06 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/18 21:04:41 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,23 @@ int	init(t_program	*program)
 		pthread_create(&program->philos[count].thread_id, NULL, philo_init, program->philos + count);
 		count++;
 	}
-	print_info("Done creating them");
+	count = 0;
+	program->forks = (t_fork *)malloc(sizeof(t_fork) * program->philo_count);
+
+	if (!program->forks)
+	{
+		print_error("Failed to allocate forks!");
+		return (FAIL);
+	}
+	while (count < program->philo_count)
+	{
+		program->forks[count].id = count + 1;
+		act_mutex(&program->forks[count].fork_mtx, INIT);
+		bool_setter(&program->forks[count].taken, false, &program->forks[count].fork_mtx);
+		count++;
+	}
 
 
-	pthread_mutex_lock(&program->philos_ready_mtx);
-	program->philos_ready = true;
-	pthread_mutex_unlock(&program->philos_ready_mtx);
+	bool_setter(&program->philos_ready , true, &program->philos_ready_mtx);
 	return (SUCCESS);
 }
