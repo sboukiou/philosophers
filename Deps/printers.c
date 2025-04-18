@@ -27,7 +27,6 @@ void	print_error(char *error)
 	write(STDERR_FILENO, error, _strlen(error));
 	write(STDERR_FILENO, " \n", 3);
 	write(STDERR_FILENO, RESET, _strlen(RESET));
-	exit(0);
 }
 
 void	print_info(char *info)
