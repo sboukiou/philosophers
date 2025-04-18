@@ -6,7 +6,7 @@
 #    By: sboukiou <your@mail.com>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/09 13:57:32 by sboukiou          #+#    #+#              #
-#    Updated: 2025/04/18 20:03:11 by sboukiou         ###   ########.fr        #
+#    Updated: 2025/04/18 20:29:32 by sboukiou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ NAME=philo
 TEST=test
 TEST_SRC=test.c
 
-SOURCES=main.c parser.c time.c cleanup.c init.c routines.c
+SOURCES=main.c parser.c time.c cleanup.c init.c routines.c getters_setters.c
 OBJS=$(SOURCES:%.c=%.o)
 
 DEPS_SOURCES=./Deps/atoi.c ./Deps/isdigit.c ./Deps/strlen.c ./Deps/printers.c
