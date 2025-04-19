@@ -1,0 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   types.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/19 09:47:20 by sboukiou          #+#    #+#             */
+/*   Updated: 2025/04/19 09:50:21 by sboukiou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef TYPES_H
+# define TYPES_H
+
+#include "./includes.h"
+
+enum	e_status
+{
+	THINKING,
+	EATING,
+	SLEEPING
+};
+
+typedef struct s_philo t_philo;
+
+typedef struct s_fork
+{
+	int 		id;
+	pthread_mutex_t	fork_mtx;
+	bool		taken;
+}	t_fork;
+
+/*[DATA]: ./philo 8 200 200 150 [100]*/
+typedef struct s_program
+{
+	int	philo_count;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	number_of_meals;
+	long long	start_time;
+	t_philo	*philos;
+	bool	philos_ready;
+	pthread_mutex_t	philos_ready_mtx;
+	pthread_mutex_t	printf_mtx;
+	t_fork		*forks;
+}	t_program;
+
+struct s_philo
+{
+	int		id;
+	enum e_status	status;
+	pthread_t	thread_id;
+	t_program	*program;
+};
+
+typedef	enum e_mtx
+{
+	INIT,
+	LOCK,
+	UNLOCK,
+	DESTROY,
+}	t_mtx;
+
+#endif
