@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:22:20 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/16 18:35:51 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/19 09:58:08 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,25 @@ t_program	*parser(int ac, char **av)
 
 	if (ac != 5 && ac != 6)
 	{
-		print_error("Number of arguments is incorrect");
-		print_info("Usage: ./philo number_of_philos time_to_eat time_to_sleep tim_to_die [number_of_meals]");
+		print_error(NULL, "Number of arguments is incorrect");
+		print_info(NULL, "Usage: ./philo number_of_philos time_to_eat time_to_sleep tim_to_die [number_of_meals]");
 		exit(0);
 	}
 	if (_atoi(av[1]) < 2 || _atoi(av[2]) < 1  ||
 		_atoi(av[3]) < 1 || _atoi(av[4]) < 2)
 	{
-		print_error("Invalid arguments given ! Try again");
+		print_error(NULL, "Invalid arguments given ! Try again");
 		exit(0);
 	}
 	if (ac == 6 && _atoi(av[5]) < 1)
 	{
-		print_error("Invalid arguments given ! Try again");
+		print_error(NULL, "Invalid arguments given ! Try again");
 		exit(0);
 	}
 	program = (t_program *)malloc(sizeof(t_program));
 	if (!program)
 	{
-		print_error("Failed to allocate resources !");
+		print_error(NULL, "Failed to allocate resources !");
 		exit(0);
 	}
 	program->philo_count = _atoi(av[1]);

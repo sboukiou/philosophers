@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:57:16 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/18 21:04:41 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/19 10:10:18 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	init(t_program	*program)
 
 	if (!program)
 	{
-		print_error("Program pointer given is NULL !");
+		print_error(NULL, "Program pointer given is NULL !");
 		return (FAIL);
 	}
 	pthread_mutex_init(&program->printf_mtx, NULL);
@@ -28,7 +28,7 @@ int	init(t_program	*program)
 
 	if (!program->philos)
 	{
-		print_error("Failed to allocate philosophers!");
+		print_error(program, "Failed to allocate philosophers!");
 		return (FAIL);
 	}
 	count = 0;
@@ -39,14 +39,14 @@ int	init(t_program	*program)
 		pthread_create(&program->philos[count].thread_id, NULL, philo_init, program->philos + count);
 		count++;
 	}
-	count = 0;
 	program->forks = (t_fork *)malloc(sizeof(t_fork) * program->philo_count);
 
 	if (!program->forks)
 	{
-		print_error("Failed to allocate forks!");
+		print_error(NULL, "Failed to allocate forks!");
 		return (FAIL);
 	}
+	count = 0;
 	while (count < program->philo_count)
 	{
 		program->forks[count].id = count + 1;
@@ -57,5 +57,6 @@ int	init(t_program	*program)
 
 
 	bool_setter(&program->philos_ready , true, &program->philos_ready_mtx);
+	program->start_time = get_actual_time_msec(program);
 	return (SUCCESS);
 }

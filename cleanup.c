@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:52:13 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/18 18:53:24 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/19 09:55:11 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,12 @@
 void	cleanup(t_program *program)
 {
 	if (!program)
-	{
-		print_info("Nothing to cleanup ! quitting ...");
-		exit(0);
-	}
+		return ;
+	print_info(program, "Cleaning up the program .");
 	pthread_mutex_destroy(&program->philos_ready_mtx);
 	pthread_mutex_destroy(&program->printf_mtx);
 	free(program->philos);
 	free(program);
-	print_info("Cleaned up the program .");
 	exit(0);
 
 }
