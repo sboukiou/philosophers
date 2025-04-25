@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 20:10:36 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/18 20:25:34 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:47:37 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,22 @@ void	bool_setter(bool *target, bool value, pthread_mutex_t *mtx)
 	act_mutex(mtx, LOCK);
 	*target = value;
 	act_mutex(mtx, UNLOCK);
+}
+
+bool	is_priority(t_philo *philo)
+{
+	int	iter;
+	size_t	meal_count;
+
+	if (!philo || !philo->program)
+		return (false);
+	iter = 0;
+	meal_count = philo->meal_count;
+	while (iter < philo->program->philo_count)
+	{
+		if (philo->program->philos[iter].meal_count < meal_count)
+			return (false);
+		iter++;
+	}
+	return (true);
 }
