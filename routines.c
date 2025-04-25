@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:04:20 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/23 14:21:58 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:42:01 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,54 +22,25 @@ void	*philo_init(void *arg)
 		;
 	while (true)
 	{
-		if (philo->id % 2)
+		if (bool_getter(&philo->program->philo_died, &philo->program->philo_died_mtx) == true)
+			pthread_detach(pthread_self());
+		if (bool_getter(&philo->left_fork->taken, &philo->left_fork->fork_taken_mtx) == false &&
+			bool_getter(&philo->right_fork->taken, &philo->left_fork->fork_taken_mtx) == false &&
+		is_priority(philo))
 		{
-			act_mutex(&philo->right_fork->fork_mtx, LOCK);
-
-			act_mutex(&philo->program->printf_mtx, LOCK);
-			printf(BBLUE"%d Picked the right fork\n"BBLUE, philo->id);
-			act_mutex(&philo->program->printf_mtx, UNLOCK);
-
-			act_mutex(&philo->left_fork->fork_mtx, LOCK);
-			act_mutex(&philo->program->printf_mtx, LOCK);
-			printf(BBLUE"%d Picked the left fork\n"BBLUE, philo->id);
-			printf(BGREEN"%d is eating\n"BGREEN, philo->id);
-			act_mutex(&philo->program->printf_mtx, UNLOCK);
-			act_mutex(&philo->right_fork->fork_mtx, UNLOCK);
-			act_mutex(&philo->left_fork->fork_mtx, UNLOCK);
-			act_mutex(&philo->program->printf_mtx, LOCK);
-			philo->last_meal_time = get_current_time_msec(philo->program);
-			printf(BYELLOW"%d is sleeping\n"BYELLOW, philo->id);
-			ft_usleep(philo->program->time_to_sleep);
-			act_mutex(&philo->program->printf_mtx, UNLOCK);
-			act_mutex(&philo->program->printf_mtx, LOCK);
-			printf("%d is Thinking\n", philo->id);
-			act_mutex(&philo->program->printf_mtx, UNLOCK);
-			ft_usleep(60);
+			bool_setter(&philo->left_fork->taken, true, &philo->left_fork->fork_taken_mtx);
+			bool_setter(&philo->right_fork->taken, true, &philo->left_fork->fork_taken_mtx);
+			take_right_fork(philo);
+			take_left_fork(philo);
+			eat(philo);
+			release_forks(philo);
+			bool_setter(&philo->left_fork->taken, false, &philo->left_fork->fork_taken_mtx);
+			bool_setter(&philo->right_fork->taken, false, &philo->left_fork->fork_taken_mtx);
 		}
 		else
-		{
-			act_mutex(&philo->left_fork->fork_mtx, LOCK);
-			act_mutex(&philo->program->printf_mtx, LOCK);
-			printf(BBLUE"%d Picked the left fork\n"BBLUE, philo->id);
-			act_mutex(&philo->program->printf_mtx, UNLOCK);
-			act_mutex(&philo->right_fork->fork_mtx, LOCK);
-			act_mutex(&philo->program->printf_mtx, LOCK);
-			printf(BBLUE"%d Picked the right fork\n"BBLUE, philo->id);
-			printf(BGREEN"%d is eating\n"BGREEN, philo->id);
-			act_mutex(&philo->program->printf_mtx, UNLOCK);
-			act_mutex(&philo->right_fork->fork_mtx, UNLOCK);
-			act_mutex(&philo->left_fork->fork_mtx, UNLOCK);
-			act_mutex(&philo->program->printf_mtx, LOCK);
-			philo->last_meal_time = get_current_time_msec(philo->program);
-			printf(BYELLOW"%d is sleeping\n"BYELLOW, philo->id);
-			ft_usleep(philo->program->time_to_sleep);
-			act_mutex(&philo->program->printf_mtx, UNLOCK);
-			act_mutex(&philo->program->printf_mtx, LOCK);
-			printf("%d is Thinking\n", philo->id);
-			act_mutex(&philo->program->printf_mtx, UNLOCK);
-			ft_usleep(60);
-			
+	{
+			snooze(philo);
+			think(philo);
 		}
 	}
 	return (NULL);
@@ -88,12 +59,12 @@ void	*monitor_routine(void *arg)
 		{
 			if (get_time_of_last_meal(program->philos[i]) >= program->time_to_die)
 			{
-				program->philo_died = true;
-				print_dead(program, program->philos[i].id);
+				bool_setter(&program->philo_died, true,  &program->philo_died_mtx);
+				died(program->philos + i);
+				detach_all_threads(program);
 				cleanup(program);
-				exit(0);
 			}
 		}
 	}
-	return (program);
+	return (NULL);
 }
