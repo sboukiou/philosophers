@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 15:12:29 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/19 09:54:08 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:34:01 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_usleep(int time)
 	return (SUCCESS);
 }
 
-long long	get_actual_time_msec(t_program *program)
+time_t	get_current_time_msec(t_program *program)
 {
 	struct timeval	tv;
 	struct timeval	tz;
@@ -47,5 +47,10 @@ long long	get_actual_time_msec(t_program *program)
 		print_error(program, "gettimeofday failed !");
 		exit(0);
 	}
-	return((long long)(tv.tv_usec / 1000));
+	return((time_t)(tv.tv_usec / 1000));
+}
+
+time_t	get_time_of_last_meal(t_philo philo)
+{
+	return (philo.last_meal_time);
 }

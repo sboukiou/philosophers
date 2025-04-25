@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 09:47:20 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/19 09:50:21 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:32:40 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,20 @@ typedef struct s_program
 	pthread_mutex_t	philos_ready_mtx;
 	pthread_mutex_t	printf_mtx;
 	t_fork		*forks;
+	bool		philo_died;
+	bool		all_philos_full;
+	pthread_t	monitor;
 }	t_program;
 
 struct s_philo
 {
 	int		id;
 	enum e_status	status;
+	t_fork		*right_fork;
+	t_fork		*left_fork;
 	pthread_t	thread_id;
 	t_program	*program;
+	time_t		last_meal_time;
 };
 
 typedef	enum e_mtx

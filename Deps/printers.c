@@ -6,18 +6,13 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:30:18 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/19 10:17:32 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:31:23 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./deps.h"
 #include "../philo.h"
 
-#define RESET "\033[0m"
-#define BRED "\033[1;31m"
-#define BGREEN "\033[1;32m"
-#define BYELLOW "\033[1;33m"
-#define BBLUE "\033[1;34m"
 
 void	print_error(t_program *program, char *error)
 {
@@ -45,23 +40,65 @@ void	print_info(t_program *program, char *info)
 		act_mutex(&program->printf_mtx, UNLOCK);
 }
 
-void	print_thinking(t_program *program, int id, long long timestamp)
+void	think(t_philo *philo)
 {
-	if (program)
-		act_mutex(&program->printf_mtx, LOCK);
-	printf(BGREEN"%lld %d is thinking\n"RESET, timestamp, id);
-	if (program)
-		act_mutex(&program->printf_mtx, UNLOCK);
+	time_t	timestamp;
+
+	if (!philo || !philo->program)
+		return ;
+	act_mutex(&philo->program->printf_mtx, LOCK);
+	timestamp = get_current_time_msec(philo->program);
+	printf(BGREEN"%ld %d is thinking\n"RESET, timestamp, philo->id);
+	act_mutex(&philo->program->printf_mtx, UNLOCK);
 }
 
-void	print_eating(t_program *program, int id, long long timestamp)
+void	eat(t_philo *philo)
 {
-	if (program)
-		act_mutex(&program->printf_mtx, LOCK);
-	write(STDOUT_FILENO, BBLUE, _strlen(BBLUE));
-	printf("%lld %d is eating", timestamp, id);
-	write(STDOUT_FILENO, "\n", 2);
-	write(STDOUT_FILENO, RESET, _strlen(RESET));
-	if (program)
-		act_mutex(&program->printf_mtx, UNLOCK);
+	time_t	timestamp;
+
+	if (!philo || !philo->program)
+		return ;
+	act_mutex(&philo->program->printf_mtx, LOCK);
+	timestamp = get_current_time_msec(philo->program);
+	printf(BBLUE"%ld %d is eating\n"RESET, timestamp, philo->id);
+	act_mutex(&philo->program->printf_mtx, UNLOCK);
+	ft_usleep(philo->program->time_to_eat);
+}
+
+void	died(t_philo *philo)
+{
+	time_t	timestamp;
+
+	if (!philo || !philo->program)
+		act_mutex(&philo->program->printf_mtx, LOCK);
+	printf(BRED"%lkj%d died\n"RESET, philo->id);
+	if (philo->program)
+		act_mutex(&philo->program->printf_mtx, UNLOCK);
+	ft_usleep(philo->program->time_to_eat);
+}
+
+void	take_left_fork(t_philo *philo)
+{
+	time_t	timestamp;
+
+	if (!philo || !philo->program)
+		return ;
+	timestamp = get_current_time_msec(philo->program);
+	act_mutex(&philo->left_fork->fork_mtx, LOCK);
+	act_mutex(&philo->program->printf_mtx, LOCK);
+	printf(BBLUE"%ld %d has taken the left fork\n"BBLUE, timestamp, philo->id);
+	act_mutex(&philo->program->printf_mtx, UNLOCK);
+}
+
+void	take_right_fork(t_philo *philo)
+{
+	time_t	timestamp;
+
+	if (!philo || !philo->program)
+		return ;
+	timestamp = get_current_time_msec(philo->program);
+	act_mutex(&philo->right_fork->fork_mtx, LOCK);
+	act_mutex(&philo->program->printf_mtx, LOCK);
+	printf(BBLUE"%ld %d has taken the right fork\n"BBLUE, timestamp, philo->id);
+	act_mutex(&philo->program->printf_mtx, UNLOCK);
 }

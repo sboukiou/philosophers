@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 16:52:13 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/19 11:00:39 by sboukiou         ###   ########.fr       */
+/*   Created: 2025/04/21 16:19:27 by sboukiou          #+#    #+#             */
+/*   Updated: 2025/04/21 16:35:27 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "./philo.h"
+#include "./philo.h"
 
-void	cleanup(t_program *program)
+void	monitor(t_program *program)
 {
-	if (!program)
-		return ;
-	print_info(program, "Cleaning up the program .");
-	pthread_mutex_destroy(&program->philos_ready_mtx);
-	pthread_mutex_destroy(&program->printf_mtx);
-	free(program->philos);
-	free(program->forks);
-	free(program);
-	exit(0);
+	int	check_thread_creation;
 
+	if (program == NULL)
+	{
+		print_error(NULL, "Program not available");
+		exit(0);
+	}
+	check_thread_creation = pthread_create(&program->monitor, NULL, monitor_routine, program);
+	if (check_thread_creation != 0)
+	{
+		print_error(program, "Failed to create the monitor thread");
+		exit(0);
+	}
 }
