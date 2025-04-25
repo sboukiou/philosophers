@@ -6,7 +6,7 @@
 /*   By: sboukiou <sboukiou@1337.ma>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 08:44:15 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/21 16:33:50 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:47:49 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	monitor(t_program *program);
 
 /* Cleanup functions */
 void	cleanup(t_program *program);
+void	detach_all_threads(t_program *program);
 
 /* Routines */
 void	*philo_init(void *arg);
@@ -51,5 +52,6 @@ void	*monitor_routine(void *arg);
 void	act_mutex(pthread_mutex_t *mutex, t_mtx action);
 bool	bool_getter(bool *target, pthread_mutex_t *mtx);
 void	bool_setter(bool *target, bool value, pthread_mutex_t *mtx);
+bool	is_priority(t_philo *philo);
 
 #endif
