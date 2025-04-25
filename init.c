@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:57:16 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/20 15:15:15 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:10:38 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	init(t_program	*program)
 	}
 	act_mutex(&program->printf_mtx, INIT);
 	act_mutex(&program->philos_ready_mtx, INIT);
+	act_mutex(&program->philo_died_mtx, INIT);
 	program->philos_ready = false;
 	program->philos = (t_philo *)malloc(sizeof(t_philo) * program->philo_count);
 	if (!program->philos)
@@ -41,6 +42,7 @@ int	init(t_program	*program)
 	{
 		program->forks[count].id = count + 1;
 		act_mutex(&program->forks[count].fork_mtx, INIT);
+		act_mutex(&program->forks[count].fork_taken_mtx, INIT);
 		bool_setter(&program->forks[count].taken, false, &program->forks[count].fork_mtx);
 		count++;
 	}
@@ -48,6 +50,7 @@ int	init(t_program	*program)
 	while (count < program->philo_count)
 	{
 		program->philos[count].id = count + 1;
+		program->philos[count].meal_count = 0;
 		program->philos[count].program = program;
 		program->philos[count].left_fork = &program->forks[(count + 1) % program->philo_count];
 		program->philos[count].right_fork = &program->forks[count];
