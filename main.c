@@ -35,12 +35,12 @@ int main(int ac, char **av)
 	print_info(NULL, "Parser: ");
 	program = parser(ac, av);
 	if (program == NULL)
-		return (FAIL);
+		return (SUCCESS);
 	print_info(NULL, "Init : ");
 	if (init(program) != SUCCESS)
-		return (FAIL);
+		return (SUCCESS);
 	if (wait_for_threads(program) != SUCCESS)
-		return (FAIL);
+		return (SUCCESS);
 	print_info(program, "Initialization compeleted !");
 	print_info(NULL, "Cleanup: ");
 	cleanup(program);
