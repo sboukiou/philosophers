@@ -13,6 +13,7 @@
 int	_isdigit(int c);
 int	_atoi(const char *nptr);
 size_t	_strlen(const char *str);
+void	_bzero(void *addr, size_t size);
 
 #define RESET "\033[0m"
 #define BRED "\033[1;31m"
