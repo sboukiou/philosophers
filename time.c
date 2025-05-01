@@ -45,9 +45,9 @@ time_t	get_current_time_msec(t_program *program)
 	if (gettimeofday(&tv, &tz))
 	{
 		print_error(program, "gettimeofday failed !");
-		exit(0);
+		return (-1);
 	}
-	return((time_t)(tv.tv_usec / 1000));
+	return((time_t)(tv.tv_usec));
 }
 
 time_t	get_time_of_last_meal(t_philo philo)
