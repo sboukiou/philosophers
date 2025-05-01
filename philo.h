@@ -55,5 +55,6 @@ int	get_number(int *target, pthread_mutex_t *mtx);
 void	set_number(int *target, int value, pthread_mutex_t *mtx);
 bool	get_priority(t_philo *philo);
 bool get_all_eaten(t_program *program);
+bool	get_forks_available(t_philo *philo);
 
 #endif
