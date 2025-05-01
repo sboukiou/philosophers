@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:22:20 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/19 09:58:08 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:17:24 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_program	*parser(int ac, char **av)
 		print_error(NULL, "Failed to allocate resources !");
 		return (NULL);
 	}
+	memset(program, '\0', sizeof(t_program));
 	program->philo_count = _atoi(av[1]);
 	program->time_to_die = _atoi(av[2]) * 1000;
 	program->time_to_eat = _atoi(av[3]) * 1000;
