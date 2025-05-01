@@ -12,36 +12,43 @@
 
 # include "./philo.h"
 
-void	detach_all_threads(t_program *program)
+static int	destroy_program_locks(t_program *prog)
 {
-	int	iter;
+	int	count;
 
-	if (!program || !program->philos)
-		return ;
-	iter = 0;
-	while (iter < program->philo_count)
+	if (set_mutex(&prog->all_philos_full_mtx, DESTROY) != SUCCESS)
+		return (FAIL);
+	if (set_mutex(&prog->philos_ready_mtx, DESTROY) != SUCCESS)
+		return (FAIL);
+	if (set_mutex(&prog->philo_died_mtx, DESTROY) != SUCCESS)
+		return (FAIL);
+	if (set_mutex(&prog->printf_mtx, DESTROY) != SUCCESS)
+		return (FAIL);
+	count = 0;
+	while (count < prog->philo_count)
 	{
-		pthread_detach(program->philos[iter].thread_id);
-		iter++;
+		if (set_mutex(&prog->philos[count].meal_count_mtx, DESTROY) != SUCCESS)
+			return (FAIL);
+		if (set_mutex(&prog->forks[count].fork_mtx, DESTROY) != SUCCESS)
+			return (FAIL);
+		if (set_mutex(&prog->forks[count].taken_mtx, DESTROY) != SUCCESS)
+			return (FAIL);
+		count++;
 	}
+	return (SUCCESS);
 }
 
 void	cleanup(t_program *program)
 {
+	int	count;
+
 	if (!program)
 		return ;
-	print_info(program, "Cleaning up the program .");
-	pthread_mutex_destroy(&program->philos_ready_mtx);
-	pthread_mutex_destroy(&program->printf_mtx);
-	pthread_mutex_destroy(&program->philo_died_mtx);
-	for (int i = 0; i < program->philo_count; i++)
-	{
-		act_mutex(&program->forks[i].fork_mtx, DESTROY);
-		act_mutex(&program->forks[i].fork_taken_mtx, DESTROY);
-	}
+	count = 0;
+	if (destroy_program_locks(program) != SUCCESS)
+		print_error(program, "Failed to destroy all the locks !! Leaving ...");
+	print_info(program, "Freeing program resources");
 	free(program->philos);
 	free(program->forks);
 	free(program);
-	exit(0);
-
 }
