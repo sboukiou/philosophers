@@ -12,15 +12,6 @@
 
 #include "./philo.h"
 
-bool	both_forks_available(t_philo *philo)
-{
-	if (get_bool(&philo->left_fork->taken, &philo->left_fork->taken_mtx) == true)
-		return (false);
-	if (get_bool(&philo->right_fork->taken, &philo->right_fork->taken_mtx) == true)
-		return (false);
-	return (true);
-}
-
 void	*philosopher(void *args)
 {
 	t_philo	*philo;
