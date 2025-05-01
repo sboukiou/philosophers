@@ -11,20 +11,30 @@
 /* ************************************************************************** */
 
 #include "./philo.h"
-
-void	monitor(t_program *program)
-{
-	int	check_thread_creation;
-
-	if (program == NULL)
-	{
-		print_error(NULL, "Program not available");
-		exit(0);
-	}
-	check_thread_creation = pthread_create(&program->monitor, NULL, monitor_routine, program);
-	if (check_thread_creation != 0)
-	{
-		print_error(program, "Failed to create the monitor thread");
-		exit(0);
-	}
-}
+/**/
+/*void	*monitor_routine(void *arg)*/
+/*{*/
+/*	int		iter;*/
+/*	t_program	*prog;*/
+/**/
+/**/
+/*	if (arg == NULL)*/
+/*		return (NULL);*/
+/*	prog = (t_program *)arg;*/
+/*	iter = 0;*/
+/*	while (get_all_eaten(prog) == false &&*/
+/*	get_bool(&prog->all_philos_full, &prog->all_philos_full_mtx) == false)*/
+/*	{*/
+/*		for (int i = 0; i < prog->philo_count; i++)*/
+/*		{*/
+/*			if (get_current_time_msec(prog) - get_time_of_last_meal(prog->philos[i]) > prog->time_to_die)*/
+/*			{*/
+/*				died(&prog->philos[i]);*/
+/*				exit(0);*/
+/*				set_bool(&prog->philo_died, true, &prog->philo_died_mtx);*/
+/*				cleanup(prog);*/
+/*			}*/
+/*		}*/
+/*	}*/
+/*	return (NULL);*/
+/*}*/
