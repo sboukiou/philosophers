@@ -28,7 +28,7 @@ typedef struct s_fork
 {
 	int 		id;
 	pthread_mutex_t	fork_mtx;
-	pthread_mutex_t	fork_taken_mtx;
+	pthread_mutex_t	taken_mtx;
 	bool		taken;
 }	t_fork;
 
@@ -40,7 +40,7 @@ typedef struct s_program
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	number_of_meals;
-	long long	start_time;
+	time_t	start_time;
 	t_philo	*philos;
 	bool	philos_ready;
 	t_fork		*forks;
@@ -50,6 +50,7 @@ typedef struct s_program
 	pthread_mutex_t	philos_ready_mtx;
 	pthread_mutex_t	printf_mtx;
 	pthread_mutex_t	philo_died_mtx;
+	pthread_mutex_t	all_philos_full_mtx;
 }	t_program;
 
 struct s_philo
@@ -60,7 +61,8 @@ struct s_philo
 	pthread_t	thread_id;
 	t_program	*program;
 	time_t		last_meal_time;
-	size_t		meal_count;
+	int		meal_count;
+	pthread_mutex_t	meal_count_mtx;
 };
 
 typedef	enum e_mtx
