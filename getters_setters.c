@@ -13,39 +13,40 @@
 #include "./philo.h"
 
 
-void	act_mutex(pthread_mutex_t *mutex, t_mtx action)
+int	set_mutex(pthread_mutex_t *mutex, t_mtx action)
 {
 	if (action == INIT)
-		pthread_mutex_init(mutex, NULL);
+		return (pthread_mutex_init(mutex, NULL));
 	if (action == LOCK)
-		pthread_mutex_lock(mutex);
-	else if (action == UNLOCK)
-		pthread_mutex_unlock(mutex);
-	else if (action == DESTROY)
-		pthread_mutex_destroy(mutex);
+		return (pthread_mutex_lock(mutex));
+	if (action == UNLOCK)
+		return (pthread_mutex_unlock(mutex));
+	if (action == DESTROY)
+		return (pthread_mutex_destroy(mutex));
+	return (FAIL);
 }
 
-bool	bool_getter(bool *target, pthread_mutex_t *mtx)
+bool	get_bool(bool *target, pthread_mutex_t *mtx)
 {
 	bool	value;
 
-	act_mutex(mtx, LOCK);
+	set_mutex(mtx, LOCK);
 	value = *target;
-	act_mutex(mtx, UNLOCK);
+	set_mutex(mtx, UNLOCK);
 	return (value);
 }
 
-void	bool_setter(bool *target, bool value, pthread_mutex_t *mtx)
+void	set_bool(bool *target, bool value, pthread_mutex_t *mtx)
 {
-	act_mutex(mtx, LOCK);
+	set_mutex(mtx, LOCK);
 	*target = value;
-	act_mutex(mtx, UNLOCK);
+	set_mutex(mtx, UNLOCK);
 }
 
-bool	is_priority(t_philo *philo)
+bool	get_priority(t_philo *philo)
 {
 	int	iter;
-	size_t	meal_count;
+	int	meal_count;
 
 	if (!philo || !philo->program)
 		return (false);
@@ -54,6 +55,41 @@ bool	is_priority(t_philo *philo)
 	while (iter < philo->program->philo_count)
 	{
 		if (philo->program->philos[iter].meal_count < meal_count)
+			return (false);
+		iter++;
+	}
+	return (true);
+}
+
+int	get_number(int *target, pthread_mutex_t *mtx)
+{
+	int	value;
+
+	if (!target)
+		return (-1);
+	set_mutex(mtx, LOCK);
+	value = *target;
+	set_mutex(mtx, UNLOCK);
+	return (value);
+}
+
+void	set_number(int *target, int value, pthread_mutex_t *mtx)
+{
+	set_mutex(mtx, LOCK);
+	*target = value;
+	set_mutex(mtx, UNLOCK);
+}
+
+bool get_all_eaten(t_program *program)
+{
+	int	iter;
+
+	if (!program || !program->philos)
+		return (false);
+	iter = 0;
+	while (iter < program->philo_count)
+	{
+		if (get_number(&program->philos[iter].meal_count, &program->philos[iter].meal_count_mtx) < program->number_of_meals)
 			return (false);
 		iter++;
 	}
