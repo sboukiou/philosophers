@@ -95,3 +95,13 @@ bool get_all_eaten(t_program *program)
 	}
 	return (true);
 }
+
+bool	get_forks_available(t_philo *philo)
+{
+	if (get_bool(&philo->left_fork->taken, &philo->left_fork->taken_mtx) == true)
+		return (false);
+	if (get_bool(&philo->right_fork->taken, &philo->right_fork->taken_mtx) == true)
+		return (false);
+	return (true);
+}
+
