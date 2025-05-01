@@ -13,17 +13,36 @@
 #include "./philo.h"
 #include "./Deps/deps.h"
 
+int	wait_for_threads(t_program *prog)
+{
+	int	count;
+
+	if (!prog)
+		return (FAIL);
+	count = 0;
+	while (count < prog->philo_count)
+	{
+		pthread_join(prog->philos[count].thread_id, NULL);
+		count++;
+	}
+	return (SUCCESS);
+}
+
 int main(int ac, char **av)
 {
 	t_program	*program;
 
+	print_info(NULL, "Parser: ");
 	program = parser(ac, av);
-	init(program);
-	monitor(program);
-	for (int i = 0; i < program->philo_count; i++)
-		pthread_join(program->philos[i].thread_id, NULL);
-	print_info(program, "All philosophers are now ready and set");
-	// simulate_dinner(program);
+	if (program == NULL)
+		return (FAIL);
+	print_info(NULL, "Init : ");
+	if (init(program) != SUCCESS)
+		return (FAIL);
+	if (wait_for_threads(program) != SUCCESS)
+		return (FAIL);
+	print_info(program, "Initialization compeleted !");
+	print_info(NULL, "Cleanup: ");
 	cleanup(program);
 	return (0);
 }
