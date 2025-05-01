@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 09:49:19 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/19 09:49:40 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:16:43 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@
 # include <unistd.h> /* For write, usleep */
 # include <limits.h> /* INT_MIN & INT_MAX */
 #include <sys/time.h> /* For gettimeofday & settimeofday */
+#include <string.h> /* For memset */
 
 #endif
