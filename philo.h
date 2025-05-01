@@ -38,20 +38,22 @@ int	init(t_program	*program);
 void	*philo_init(void *arg);
 
 /* Monitoring */
-void	monitor(t_program *program);
+void	*monitor_routine(void *prog);
 
 /* Cleanup functions */
 void	cleanup(t_program *program);
 void	detach_all_threads(t_program *program);
 
 /* Routines */
-void	*philo_init(void *arg);
-void	*monitor_routine(void *arg);
+void	*philosopher(void *args);
 
 /* Getters & Setters */
-void	act_mutex(pthread_mutex_t *mutex, t_mtx action);
-bool	bool_getter(bool *target, pthread_mutex_t *mtx);
-void	bool_setter(bool *target, bool value, pthread_mutex_t *mtx);
-bool	is_priority(t_philo *philo);
+int	set_mutex(pthread_mutex_t *mutex, t_mtx action);
+bool	get_bool(bool *target, pthread_mutex_t *mtx);
+void	set_bool(bool *target, bool value, pthread_mutex_t *mtx);
+int	get_number(int *target, pthread_mutex_t *mtx);
+void	set_number(int *target, int value, pthread_mutex_t *mtx);
+bool	get_priority(t_philo *philo);
+bool get_all_eaten(t_program *program);
 
 #endif
