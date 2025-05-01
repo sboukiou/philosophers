@@ -94,8 +94,6 @@ int	init(t_program	*program)
 		return (FAIL);
 	if (init_program_locks(program) != SUCCESS)
 		return (print_info(NULL, "Failed to initialize program Locks"), FAIL);
-	if (init_program_philos_data(program) != SUCCESS)
-		return (FAIL);
 	count = 0;
 	while (count < program->philo_count)
 	{
@@ -107,6 +105,8 @@ int	init(t_program	*program)
 			return (FAIL);
 		count++;
 	}
+	if (init_program_philos_data(program) != SUCCESS)
+		return (FAIL);
 	set_bool(&program->philos_ready, true, &program->philos_ready_mtx);
 	return (SUCCESS);
 }
