@@ -19,6 +19,7 @@ static int	init_program_locks(t_program *prog)
 	prog->all_philos_full = false;
 	prog->philos_ready = false;
 	prog->philo_died = false;
+	prog->end_of_simu = false;
 	if (set_mutex(&prog->philos_ready_mtx, INIT) != SUCCESS)
 		return (FAIL);
 	if (set_mutex(&prog->all_philos_full_mtx, INIT) != SUCCESS)
@@ -26,6 +27,8 @@ static int	init_program_locks(t_program *prog)
 	if (set_mutex(&prog->philo_died_mtx, INIT) != SUCCESS)
 		return (FAIL);
 	if (set_mutex(&prog->printf_mtx, INIT) != SUCCESS)
+		return (FAIL);
+	if (set_mutex(&prog->end_of_simu_mtx, INIT) != SUCCESS)
 		return (FAIL);
 	count = 0;
 	while (count < prog->philo_count)

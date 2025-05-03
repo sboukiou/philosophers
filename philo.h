@@ -26,7 +26,7 @@
 # define THINKING_TIME 80
 
 /* Prototyeps for time functions */
-int	ft_usleep(int time);
+int	usnooze(t_program *prog, int time);
 time_t	get_current_time_msec(t_program *program);
 time_t	get_time_of_last_meal(t_philo philo);
 
@@ -39,6 +39,7 @@ void	*philo_init(void *arg);
 
 /* Monitoring */
 void	*monitor_routine(void *prog);
+void	monitor(t_program *prog);
 
 /* Cleanup functions */
 void	cleanup(t_program *program);
