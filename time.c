@@ -14,26 +14,47 @@
 #include "./philo.h"
 #include <sys/time.h>
 
+time_t	get_current_time(t_program *prog, t_time unit)
+{
+	struct timeval	tv;
+	struct timezone	tz;
+	if (gettimeofday(&tv, &tz) != SUCCESS)
+	{
+		print_error(prog, "Failed to fetch current time (gettimeofday)");
+		return (FAIL);
+	}
+	if (unit == MSEC)
+		return (tv.tv_sec * 1e3 + tv.tv_usec / 1e3);
+	if (unit == USEC)
+		return (tv.tv_sec * 1e6 + tv.tv_usec);
+	if (unit == SEC)
+		return (tv.tv_sec + tv.tv_usec / 1e6);
+	print_error(prog, "Wrong time unit given");
+	return (FAIL);
+}
+
 /**
-	* ft_usleep - pauses the calling thread for
+	* usnooze - pauses the calling thread for
 	* a precise amount of time in m_seconds
 	* @time: Time to sleep (in m-seconds)
 	* Return: 0 if succeeded or -1
 	*/
-int	ft_usleep(int time)
+int	usnooze(t_program *prog, int time)
 {
-	struct timeval	tv_start;
-	struct timeval	tv_end;
-	struct timezone	tz_start;
-	struct timezone	tz_end;
+	time_t	start_time;
+	time_t	elapsed_time;
 
-	if (gettimeofday(&tv_start, &tz_start))
+	start_time = get_current_time(prog, MSEC);
+	elapsed_time = get_current_time(prog, MSEC);
+	if (elapsed_time == FAIL || start_time == FAIL)
 		return (FAIL);
-	if (gettimeofday(&tv_end, &tz_end))
-		return (FAIL);
-	while (tv_end.tv_usec < tv_start.tv_usec + time * 1000)
-		if (gettimeofday(&tv_end, &tz_end))
+	while (elapsed_time < start_time + time)
+	{
+		usleep(10);
+		elapsed_time = get_current_time(prog, MSEC);
+		if (elapsed_time == FAIL)
 			return (FAIL);
+	}
 	return (SUCCESS);
 }
 

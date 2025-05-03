@@ -42,15 +42,17 @@ typedef struct s_program
 	int	number_of_meals;
 	time_t	start_time;
 	t_philo	*philos;
-	bool	philos_ready;
 	t_fork		*forks;
+	bool	philos_ready;
 	bool		philo_died;
 	bool		all_philos_full;
+	bool		end_of_simu;
 	pthread_t	monitor;
 	pthread_mutex_t	philos_ready_mtx;
 	pthread_mutex_t	printf_mtx;
 	pthread_mutex_t	philo_died_mtx;
 	pthread_mutex_t	all_philos_full_mtx;
+	pthread_mutex_t	end_of_simu_mtx;
 }	t_program;
 
 struct s_philo
@@ -72,5 +74,14 @@ typedef	enum e_mtx
 	UNLOCK,
 	DESTROY,
 }	t_mtx;
+
+enum e_time
+{
+	MSEC,
+	USEC,
+	SEC,
+};
+typedef enum e_time	t_time;
+
 
 #endif
