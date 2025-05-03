@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: sboukiou <your@mail.com>                   +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/04/09 13:57:32 by sboukiou          #+#    #+#              #
-#    Updated: 2025/04/25 12:36:22 by sboukiou         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 # NOTE: to use with valgrind --> valgrind --tool=helgrind [Program_name] [arguments]
 # -fsanitize=thread
 #  -g (Debug info)
