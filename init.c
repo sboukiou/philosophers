@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:57:16 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/05/01 17:42:49 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:11:45 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,8 @@ int	init(t_program	*program)
 		program->forks[count].taken = false;
 		count++;
 	}
-	print_info(program, "Done initializing the Locks");
 	if (init_program_philos_data(program) != SUCCESS)
 		return (FAIL);
-	print_info(program, "Done creating the philos threads");
 	set_bool(&program->philos_ready, true, &program->philos_ready_mtx);
-	print_info(program, "Setting all philos ready boolean value to true: ");
 	return (SUCCESS);
 }
