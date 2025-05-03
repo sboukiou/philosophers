@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:21:48 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/21 16:18:21 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:11:59 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int main(int ac, char **av)
 		return (SUCCESS);
 	if (wait_for_threads(program) != SUCCESS)
 		return (SUCCESS);
-	print_info(program, "Initialization compeleted !");
 	print_info(NULL, "Cleanup: ");
 	cleanup(program);
 	return (0);
