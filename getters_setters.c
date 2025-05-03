@@ -83,15 +83,21 @@ void	set_number(int *target, int value, pthread_mutex_t *mtx)
 bool get_all_eaten(t_program *program)
 {
 	int	iter;
+	int	value;
 
 	if (!program || !program->philos)
-		return (false);
+		return (print_info(NULL, "Failed to find prog or philos"), false);
 	iter = 0;
+	usleep(60);
 	while (iter < program->philo_count)
 	{
-		if (get_number(&program->philos[iter].meal_count, &program->philos[iter].meal_count_mtx) < program->number_of_meals)
+		value = get_number(&program->philos[iter].meal_count, &program->philos[iter].meal_count_mtx);
+		set_mutex(&program->printf_mtx, LOCK);
+		set_mutex(&program->printf_mtx, UNLOCK);
+		if (value < program->number_of_meals)
 			return (false);
 		iter++;
+		usleep(60);
 	}
 	return (true);
 }
@@ -104,4 +110,3 @@ bool	get_forks_available(t_philo *philo)
 		return (false);
 	return (true);
 }
-
