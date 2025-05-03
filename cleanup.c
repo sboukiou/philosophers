@@ -24,6 +24,8 @@ static int	destroy_program_locks(t_program *prog)
 		return (FAIL);
 	if (set_mutex(&prog->printf_mtx, DESTROY) != SUCCESS)
 		return (FAIL);
+	if (set_mutex(&prog->end_of_simu_mtx, DESTROY) != SUCCESS)
+		return (FAIL);
 	count = 0;
 	while (count < prog->philo_count)
 	{
@@ -40,11 +42,8 @@ static int	destroy_program_locks(t_program *prog)
 
 void	cleanup(t_program *program)
 {
-	int	count;
-
 	if (!program)
 		return ;
-	count = 0;
 	if (destroy_program_locks(program) != SUCCESS)
 		print_error(program, "Failed to destroy all the locks !! Leaving ...");
 	print_info(program, "Freeing program resources");
