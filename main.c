@@ -39,6 +39,7 @@ int main(int ac, char **av)
 	print_info(NULL, "Init : ");
 	if (init(program) != SUCCESS)
 		return (SUCCESS);
+	monitor(program);
 	if (wait_for_threads(program) != SUCCESS)
 		return (SUCCESS);
 	print_info(NULL, "Cleanup: ");

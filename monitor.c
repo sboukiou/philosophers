@@ -12,29 +12,44 @@
 
 #include "./philo.h"
 /**/
+void	monitor(t_program *prog)
+{
+	int	thread_check;
+
+	if (!prog)
+		return ;
+	thread_check = pthread_create(&prog->monitor, NULL, monitor_routine, prog);
+	if (thread_check != SUCCESS)
+	{
+		print_error(prog, "Failed to create the monitor thread");
+		return ;
+	}
+}
+
 void	*monitor_routine(void *arg)
 {
-	int		iter;
 	t_program	*prog;
-
 
 	if (arg == NULL)
 		return (NULL);
 	prog = (t_program *)arg;
-	iter = 0;
-	while (get_all_eaten(prog) == false &&
-	get_bool(&prog->all_philos_full, &prog->all_philos_full_mtx) == false)
+	while (get_all_eaten(prog) == false)
 	{
 		for (int i = 0; i < prog->philo_count; i++)
 		{
 			if (get_current_time_msec(prog) - get_time_of_last_meal(prog->philos[i]) > prog->time_to_die)
 			{
+				print_info(prog, "A philosopher died");
 				died(&prog->philos[i]);
-				exit(0);
+				return (NULL);
 				set_bool(&prog->philo_died, true, &prog->philo_died_mtx);
+				set_bool(&prog->end_of_simu, true, &prog->end_of_simu_mtx);
 				cleanup(prog);
 			}
 		}
 	}
+	set_bool(&prog->end_of_simu, true, &prog->end_of_simu_mtx);
+	if (get_all_eaten(prog) == true)
+		return (print_info(prog, "All philos full"), NULL);
 	return (NULL);
 }
