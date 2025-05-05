@@ -80,28 +80,6 @@ void	set_number(int *target, int value, pthread_mutex_t *mtx)
 	set_mutex(mtx, UNLOCK);
 }
 
-bool get_all_eaten(t_program *program)
-{
-	int	iter;
-	int	value;
-
-	if (!program || !program->philos)
-		return (print_info(NULL, "Failed to find prog or philos"), false);
-	iter = 0;
-	usleep(60);
-	while (iter < program->philo_count)
-	{
-		value = get_number(&program->philos[iter].meal_count, &program->philos[iter].meal_count_mtx);
-		set_mutex(&program->printf_mtx, LOCK);
-		set_mutex(&program->printf_mtx, UNLOCK);
-		if (value < program->number_of_meals)
-			return (false);
-		iter++;
-		usleep(60);
-	}
-	return (true);
-}
-
 bool	get_forks_available(t_philo *philo)
 {
 	if (get_bool(&philo->left_fork->taken, &philo->left_fork->taken_mtx) == true)
