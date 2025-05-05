@@ -16,14 +16,14 @@ static int	start_philos(t_program *prog)
 {
 	int	i;
 	int	thread_cr;
-	t_philo	philo;
+	t_philo	*philo;
 
 	i = 0;
 	while (i < prog->philo_count)
 	{
-		philo = prog->philos[i];
-		philo.last_meal_time = prog->start_time + 1;
-		thread_cr = pthread_create(&philo.thread_id, NULL, philosopher, prog->philos + i);
+		philo = &prog->philos[i];
+		philo->last_meal_time = prog->start_time + 1;
+		thread_cr = pthread_create(&philo->thread_id, NULL, philosopher, prog->philos + i);
 		if (thread_cr != SUCCESS)
 			return (FAIL);
 		i++;
@@ -38,6 +38,5 @@ int	start_dinner(t_program *prog)
 	prog->start_time = get_current_time(prog, MSEC);
 	start_philos(prog);
 	set_bool(&prog->philos_ready, true, &prog->philos_ready_mtx);
-	/*monitor(prog);*/
 	return (SUCCESS);
 }
