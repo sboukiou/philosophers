@@ -6,14 +6,14 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:21:48 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/05/01 18:11:59 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/05 13:49:47 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 #include "./Deps/deps.h"
 
-int	wait_for_threads(t_program *prog)
+static int	join_all_threads(t_program *prog)
 {
 	int	count;
 
@@ -32,17 +32,20 @@ int main(int ac, char **av)
 {
 	t_program	*program;
 
-	print_info(NULL, "Parser: ");
 	program = parser(ac, av);
 	if (program == NULL)
-		return (SUCCESS);
-	print_info(NULL, "Init : ");
+		return (FAIL);
+	print_info(NULL, "Parser: ");
 	if (init(program) != SUCCESS)
-		return (SUCCESS);
-	monitor(program);
-	if (wait_for_threads(program) != SUCCESS)
-		return (SUCCESS);
+		return (FAIL);
+	print_info(program, "Init : ");
+	if (start_dinner(program) != SUCCESS)
+		return (FAIL);
+	print_info(program, "Start dinner : ");
+	if (join_all_threads(program) != SUCCESS)
+		return (FAIL);
+	print_info(program, "All threads joined");
 	print_info(NULL, "Cleanup: ");
 	cleanup(program);
-	return (0);
+	return (SUCCESS);
 }
