@@ -22,7 +22,8 @@ static int	join_all_threads(t_program *prog)
 	count = 0;
 	while (count < prog->philo_count)
 	{
-		pthread_join(prog->philos[count].thread_id, NULL);
+		if (pthread_join(prog->philos[count].thread_id, NULL) != SUCCESS)
+			return (print_info(prog, "Failed to join the thread"), FAIL);
 		count++;
 	}
 	return (SUCCESS);
