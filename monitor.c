@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:19:27 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/05/01 18:23:38 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/05 12:34:22 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	*monitor_routine(void *arg)
 				return (NULL);
 				set_bool(&prog->philo_died, true, &prog->philo_died_mtx);
 				set_bool(&prog->end_of_simu, true, &prog->end_of_simu_mtx);
-				cleanup(prog);
 			}
 		}
 	}
