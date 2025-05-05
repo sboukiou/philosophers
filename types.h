@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 09:47:20 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/25 14:08:46 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/05 14:10:55 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,13 @@ typedef struct s_program
 	t_fork		*forks;
 	bool	philos_ready;
 	bool		philo_died;
-	bool		all_philos_full;
 	bool		end_of_simu;
 	pthread_t	monitor;
 	pthread_mutex_t	philos_ready_mtx;
 	pthread_mutex_t	printf_mtx;
 	pthread_mutex_t	philo_died_mtx;
-	pthread_mutex_t	all_philos_full_mtx;
 	pthread_mutex_t	end_of_simu_mtx;
+	pthread_mutex_t	number_of_meals_mtx;
 }	t_program;
 
 struct s_philo
@@ -64,7 +63,6 @@ struct s_philo
 	t_program	*program;
 	time_t		last_meal_time;
 	int		meal_count;
-	pthread_mutex_t	meal_count_mtx;
 };
 
 typedef	enum e_mtx

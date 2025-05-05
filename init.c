@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:57:16 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/05/05 13:47:01 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/05 14:11:10 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	init_program_data(t_program *prog)
 {
-	prog->all_philos_full = false;
 	prog->philos_ready = false;
 	prog->end_of_simu = false;
 	prog->philo_died = false;
@@ -24,7 +23,7 @@ static int	init_program_data(t_program *prog)
 		return (FAIL);
 	if (set_mutex(&prog->philos_ready_mtx, INIT) != SUCCESS)
 		return (FAIL);
-	if (set_mutex(&prog->all_philos_full_mtx, INIT) != SUCCESS)
+	if (set_mutex(&prog->number_of_meals_mtx, INIT) != SUCCESS)
 		return (FAIL);
 	if (set_mutex(&prog->end_of_simu_mtx, INIT) != SUCCESS)
 		return (FAIL);
@@ -70,8 +69,6 @@ static int	init_philos(t_program *prog)
 		philo->id = count + 1;
 		philo->right_fork = prog->forks + philo->id;
 		philo->left_fork = prog->forks + ((philo->id + 1) % prog->philo_count);
-		if (set_mutex(&philo->meal_count_mtx, INIT) != SUCCESS)
-			return (FAIL);
 		count++;
 	}
 	return (SUCCESS);

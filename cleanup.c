@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:52:13 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/25 14:10:54 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/05 14:11:23 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	destroy_program_locks(t_program *prog)
 {
 	int	count;
 
-	if (set_mutex(&prog->all_philos_full_mtx, DESTROY) != SUCCESS)
+	if (set_mutex(&prog->number_of_meals_mtx, DESTROY) != SUCCESS)
 		return (FAIL);
 	if (set_mutex(&prog->philos_ready_mtx, DESTROY) != SUCCESS)
 		return (FAIL);
@@ -29,8 +29,6 @@ static int	destroy_program_locks(t_program *prog)
 	count = 0;
 	while (count < prog->philo_count)
 	{
-		if (set_mutex(&prog->philos[count].meal_count_mtx, DESTROY) != SUCCESS)
-			return (FAIL);
 		if (set_mutex(&prog->forks[count].fork_mtx, DESTROY) != SUCCESS)
 			return (FAIL);
 		if (set_mutex(&prog->forks[count].taken_mtx, DESTROY) != SUCCESS)
