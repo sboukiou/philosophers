@@ -33,7 +33,7 @@ void	*monitor_routine(void *arg)
 	if (arg == NULL)
 		return (NULL);
 	prog = (t_program *)arg;
-	while (get_all_eaten(prog) == false)
+	while (get_bool(&prog->end_of_simu, &prog->end_of_simu_mtx) == false)
 	{
 		for (int i = 0; i < prog->philo_count; i++)
 		{
@@ -48,7 +48,5 @@ void	*monitor_routine(void *arg)
 		}
 	}
 	set_bool(&prog->end_of_simu, true, &prog->end_of_simu_mtx);
-	if (get_all_eaten(prog) == true)
-		return (print_info(prog, "All philos full"), NULL);
 	return (NULL);
 }
