@@ -63,6 +63,7 @@ struct s_philo
 	t_program	*program;
 	time_t		last_meal_time;
 	int		meal_count;
+	pthread_mutex_t	meal_count_mtx;
 };
 
 typedef	enum e_mtx

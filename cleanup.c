@@ -33,6 +33,8 @@ static int	destroy_program_locks(t_program *prog)
 			return (FAIL);
 		if (set_mutex(&prog->forks[count].taken_mtx, DESTROY) != SUCCESS)
 			return (FAIL);
+		if (set_mutex(&prog->philos[count].meal_count_mtx, DESTROY) != SUCCESS)
+			return (FAIL);
 		count++;
 	}
 	return (SUCCESS);

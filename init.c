@@ -69,6 +69,8 @@ static int	init_philos(t_program *prog)
 		philo->id = count + 1;
 		philo->right_fork = prog->forks + philo->id;
 		philo->left_fork = prog->forks + ((philo->id + 1) % prog->philo_count);
+		if (set_mutex(&philo->meal_count_mtx, INIT) != SUCCESS)
+			return (FAIL);
 		count++;
 	}
 	return (SUCCESS);
