@@ -6,7 +6,7 @@
 /*   By: sboukiou <sboukiou@1337.ma>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 08:44:15 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/25 15:47:49 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/05 12:12:13 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 int	usnooze(t_program *prog, int time);
 time_t	get_current_time_msec(t_program *program);
 time_t	get_time_of_last_meal(t_philo philo);
+time_t	get_current_time(t_program *prog, t_time unit);
 
 /* Parsing functions */
 t_program	*parser(int ac, char **av);
@@ -36,6 +37,7 @@ t_program	*parser(int ac, char **av);
 /* Initers */
 int	init(t_program	*program);
 void	*philo_init(void *arg);
+int	start_dinner(t_program *prog);
 
 /* Monitoring */
 void	*monitor_routine(void *prog);
