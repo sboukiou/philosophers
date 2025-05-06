@@ -24,7 +24,7 @@ time_t	get_current_time(t_program *prog, t_time unit)
 		return (FAIL);
 	}
 	if (unit == MSEC)
-		return (tv.tv_sec * 1e3 + tv.tv_usec / 1e3);
+		return ((time_t)tv.tv_sec * 1000 + (time_t)tv.tv_usec / 1000);
 	if (unit == USEC)
 		return (tv.tv_sec * 1e6 + tv.tv_usec);
 	if (unit == SEC)

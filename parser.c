@@ -42,9 +42,9 @@ t_program	*parser(int ac, char **av)
 	}
 	memset(program, '\0', sizeof(t_program));
 	program->philo_count = _atoi(av[1]);
-	program->time_to_die = _atoi(av[2]) * 1000;
-	program->time_to_eat = _atoi(av[3]) * 1000;
-	program->time_to_sleep = _atoi(av[4]) * 1000;
+	program->time_to_die = _atoi(av[2]);
+	program->time_to_eat = _atoi(av[3]);
+	program->time_to_sleep = _atoi(av[4]);
 	if (ac == 6)
 		program->number_of_meals = _atoi(av[5]);
 	else
