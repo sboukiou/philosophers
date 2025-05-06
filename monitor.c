@@ -26,27 +26,40 @@ void	monitor(t_program *prog)
 	}
 }
 
+static bool	is_dead(t_philo *philo)
+{
+	time_t	current_time;
+	time_t	last_meal_time;
+
+	if (!philo)
+		return (true);
+	current_time = get_current_time(philo->program, MSEC);
+	last_meal_time = philo->last_meal_time;
+	if (current_time - last_meal_time > philo->program->time_to_die)
+		return (true);
+	return (false);
+}
+
 void	*monitor_routine(void *arg)
 {
 	t_program	*prog;
+	int		i;
 
 	if (arg == NULL)
 		return (NULL);
 	prog = (t_program *)arg;
 	while (get_bool(&prog->end_of_simu, &prog->end_of_simu_mtx) == false)
 	{
-		for (int i = 0; i < prog->philo_count; i++)
+		i = 0;
+		while (i < prog->philo_count && !get_bool(&prog->end_of_simu, &prog->end_of_simu_mtx))
 		{
-			if (get_current_time_msec(prog) - get_time_of_last_meal(prog->philos[i]) > prog->time_to_die)
+			if (is_dead(&prog->philos[i]) == true)
 			{
-				print_info(prog, "A philosopher died");
 				died(&prog->philos[i]);
 				return (NULL);
-				set_bool(&prog->philo_died, true, &prog->philo_died_mtx);
-				set_bool(&prog->end_of_simu, true, &prog->end_of_simu_mtx);
 			}
+			i++;
 		}
 	}
-	set_bool(&prog->end_of_simu, true, &prog->end_of_simu_mtx);
 	return (NULL);
 }

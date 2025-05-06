@@ -37,6 +37,7 @@ int	start_dinner(t_program *prog)
 		return (FAIL);
 	prog->start_time = get_current_time(prog, MSEC);
 	start_philos(prog);
+	monitor(prog);
 	set_bool(&prog->philos_ready, true, &prog->philos_ready_mtx);
 	return (SUCCESS);
 }

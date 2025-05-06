@@ -26,6 +26,8 @@ static int	join_all_threads(t_program *prog)
 			return (print_info(prog, "Failed to join the thread"), FAIL);
 		count++;
 	}
+	if (pthread_join(prog->monitor, NULL) != SUCCESS)
+		return (FAIL);
 	return (SUCCESS);
 }
 
@@ -36,17 +38,12 @@ int main(int ac, char **av)
 	program = parser(ac, av);
 	if (program == NULL)
 		return (FAIL);
-	print_info(NULL, "Parser: ");
 	if (init(program) != SUCCESS)
 		return (FAIL);
-	print_info(program, "Init : ");
 	if (start_dinner(program) != SUCCESS)
 		return (FAIL);
-	print_info(program, "Start dinner : ");
 	if (join_all_threads(program) != SUCCESS)
 		return (FAIL);
-	print_info(program, "All threads joined");
-	print_info(NULL, "Cleanup: ");
 	cleanup(program);
 	return (SUCCESS);
 }
