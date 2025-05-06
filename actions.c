@@ -40,7 +40,8 @@ void	eat(t_philo *philo)
 	set_mutex(&philo->program->printf_mtx, LOCK);
 	printf(BRED"Philo eated meal number %d\n"RESET, get_number(&philo->meal_count, &philo->meal_count_mtx));
 	set_mutex(&philo->program->printf_mtx, UNLOCK);
-	philo->last_meal_time = get_current_time_msec(philo->program);
+	philo->last_meal_time = get_current_time(philo->program, MSEC);
+	release_forks(philo);
 }
 
 void	snooze(t_philo *philo)
