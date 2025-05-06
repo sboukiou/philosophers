@@ -61,5 +61,6 @@ void	*monitor_routine(void *arg)
 			i++;
 		}
 	}
+	set_bool(&prog->end_of_simu, true, &prog->end_of_simu_mtx);
 	return (NULL);
 }
