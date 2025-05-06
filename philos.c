@@ -12,7 +12,7 @@
 
 #include "./philo.h"
 
-static bool	check_end(t_program *prog)
+bool	check_end(t_program *prog)
 {
 	if (get_bool(&prog->end_of_simu, &prog->end_of_simu_mtx) == true)
 		return (true);
