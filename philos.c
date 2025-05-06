@@ -75,8 +75,8 @@ void	*philosopher(void *args)
 			release_forks(philo);
 		}
 		else
-			usleep(philo->program->time_to_sleep / 2);
-		usleep(philo->program->time_to_sleep / 2);
+			usnooze(philo->program, philo->program->time_to_sleep / 2);
+		usnooze(philo->program, philo->program->time_to_sleep / 2);
 		think(philo);
 	}
 	return (NULL);

@@ -22,7 +22,7 @@ void	think(t_philo *philo)
 	timestamp = get_current_time(philo->program, MSEC);
 	printf(UPURPLE"%ld %d is thinking\n"RESET, timestamp, philo->id);
 	set_mutex(&philo->program->printf_mtx, UNLOCK);
-	usleep(60);
+	usnooze(philo->program, 60);
 }
 
 void	eat(t_philo *philo)
@@ -36,11 +36,9 @@ void	eat(t_philo *philo)
 	timestamp = get_current_time(philo->program, MSEC);
 	printf(BGREEN"%ld %d is eating\n"RESET, timestamp, philo->id);
 	set_mutex(&philo->program->printf_mtx, UNLOCK);
-	usleep(philo->program->time_to_eat);
+	usnooze(philo->program, philo->program->time_to_eat);
 	meal_val = get_number(&philo->meal_count, &philo->meal_count_mtx);
 	set_number(&philo->meal_count, meal_val + 1, &philo->meal_count_mtx);
-	set_mutex(&philo->program->printf_mtx, LOCK);
-	set_mutex(&philo->program->printf_mtx, UNLOCK);
 	philo->last_meal_time = get_current_time(philo->program, MSEC);
 }
 
@@ -54,20 +52,20 @@ void	snooze(t_philo *philo)
 	timestamp = get_current_time(philo->program, MSEC);
 	printf(BBLUE"%ld %d is sleeping\n"RESET, timestamp, philo->id);
 	set_mutex(&philo->program->printf_mtx, UNLOCK);
-	usleep(philo->program->time_to_sleep);
+	usnooze(philo->program, philo->program->time_to_sleep);
 }
 
 void	died(t_philo *philo)
 {
 	time_t	timestamp;
 
-	print_info(philo->program, "Called");
 	if (!philo || !philo->program)
 		set_mutex(&philo->program->printf_mtx, LOCK);
 	timestamp = get_current_time(philo->program, MSEC);
 	printf(BRED"%ld %d died\n"RESET, timestamp, philo->id);
 	if (philo->program)
 		set_mutex(&philo->program->printf_mtx, UNLOCK);
+	set_bool(&philo->program->end_of_simu, true, &philo->program->end_of_simu_mtx);
 }
 
 void	take_left_fork(t_philo *philo)
