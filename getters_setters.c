@@ -47,14 +47,18 @@ bool	get_priority(t_philo *philo)
 {
 	int	iter;
 	int	meal_count;
+	int	val;
+	t_program	*prog;
 
 	if (!philo || !philo->program)
 		return (false);
+	prog = philo->program;
 	iter = 0;
-	meal_count = philo->meal_count;
-	while (iter < philo->program->philo_count)
+	meal_count = get_number(&philo->meal_count, &philo->meal_count_mtx);
+	while (iter < prog->philo_count)
 	{
-		if (philo->program->philos[iter].meal_count < meal_count)
+		val = get_number(&prog->philos[iter].meal_count, &prog->philos[iter].meal_count_mtx) ;
+		if (val < meal_count)
 			return (false);
 		iter++;
 	}
