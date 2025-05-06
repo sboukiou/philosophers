@@ -47,5 +47,7 @@ t_program	*parser(int ac, char **av)
 	program->time_to_sleep = _atoi(av[4]) * 1000;
 	if (ac == 6)
 		program->number_of_meals = _atoi(av[5]);
+	else
+		program->number_of_meals = -1;
 	return (program);
 }
