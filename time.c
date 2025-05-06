@@ -58,19 +58,6 @@ int	usnooze(t_program *prog, int time)
 	return (SUCCESS);
 }
 
-time_t	get_current_time_msec(t_program *program)
-{
-	struct timeval	tv;
-	struct timeval	tz;
-
-	if (gettimeofday(&tv, &tz))
-	{
-		print_error(program, "gettimeofday failed !");
-		return (-1);
-	}
-	return((time_t)(tv.tv_usec));
-}
-
 time_t	get_time_of_last_meal(t_philo philo)
 {
 	return (philo.last_meal_time);
