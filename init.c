@@ -32,8 +32,7 @@ static int	init_program_data(t_program *prog)
 
 static int	init_program_memory(t_program *prog)
 {
-	if (!prog)
-	{
+	if (!prog) {
 		print_error(NULL, "Program was not allocated properly !");
 		return (FAIL);
 	}
@@ -67,8 +66,8 @@ static int	init_philos(t_program *prog)
 		philo->last_meal_time = get_current_time(prog, MSEC);
 		philo->program =  prog;
 		philo->id = count + 1;
-		philo->right_fork = prog->forks + philo->id;
-		philo->left_fork = prog->forks + ((philo->id + 1) % prog->philo_count);
+		philo->right_fork = prog->forks + philo->id - 1;
+		philo->left_fork = prog->forks + ((philo->id) % prog->philo_count);
 		if (set_mutex(&philo->meal_count_mtx, INIT) != SUCCESS)
 			return (FAIL);
 		count++;
