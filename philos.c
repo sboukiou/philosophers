@@ -19,7 +19,7 @@ bool	check_end(t_program *prog)
 	return (false);
 }
 
-static bool	philo_finished(t_philo *philo)
+bool	philo_finished(t_philo *philo)
 {
 	int	meal_count;
 	int	number_of_meals;
@@ -55,10 +55,7 @@ void	*philosopher(void *args)
 	while (true)
 	{
 		if (philo_finished(philo) == true)
-		{
-			set_bool(&philo->program->end_of_simu, true, &philo->program->end_of_simu_mtx);
 			return (print_info(philo->program, "Philo is full"), NULL);
-		}
 		if (check_end(philo->program) == true)
 			return (NULL);
 		if (get_priority(philo))

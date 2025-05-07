@@ -40,6 +40,20 @@ static bool	is_dead(t_philo *philo)
 	return (false);
 }
 
+static bool	all_philos_are_full(t_program *prog)
+{
+	int	i;
+
+	i = 0;
+	while (i < prog->philo_count)
+	{
+		if (philo_finished(prog->philos + i) == false)
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 void	*monitor_routine(void *arg)
 {
 	t_program	*prog;
@@ -53,13 +67,15 @@ void	*monitor_routine(void *arg)
 		i = 0;
 		while (i < prog->philo_count && !get_bool(&prog->end_of_simu, &prog->end_of_simu_mtx))
 		{
-			if (is_dead(&prog->philos[i]) == true)
+			if (is_dead(&prog->philos[i]) == true && philo_finished(&prog->philos[i]) == false)
 			{
 				died(&prog->philos[i]);
 				return (NULL);
 			}
 			i++;
 		}
+		if (all_philos_are_full(prog) == true)
+			return (NULL);
 	}
 	set_bool(&prog->end_of_simu, true, &prog->end_of_simu_mtx);
 	return (NULL);

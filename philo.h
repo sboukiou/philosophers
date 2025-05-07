@@ -50,6 +50,7 @@ void	detach_all_threads(t_program *program);
 /* Routines */
 void	*philosopher(void *args);
 bool	check_end(t_program *prog);
+bool	philo_finished(t_philo *philo);
 
 /* Getters & Setters */
 int	set_mutex(pthread_mutex_t *mutex, t_mtx action);
