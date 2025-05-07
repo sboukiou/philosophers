@@ -63,10 +63,10 @@ void	died(t_philo *philo)
 	time_t	timestamp;
 
 	if (!philo || !philo->program)
-		set_mutex(&philo->program->printf_mtx, LOCK);
+		return ;
+	set_mutex(&philo->program->printf_mtx, LOCK);
 	timestamp = get_current_time(philo->program, MSEC);
-	if (check_end(philo->program) == false)
-		printf(BRED"%ld %d died\n"RESET, timestamp, philo->id);
+	printf(BRED"%ld %d died\n"RESET, timestamp, philo->id);
 	if (philo->program)
 		set_mutex(&philo->program->printf_mtx, UNLOCK);
 	set_bool(&philo->program->end_of_simu, true, &philo->program->end_of_simu_mtx);
@@ -84,7 +84,7 @@ void	take_left_fork(t_philo *philo)
 	set_mutex(&philo->program->printf_mtx, LOCK);
 
 	if (check_end(philo->program) == false)
-		printf(BBLUE"%ld %d has taken the left fork\n"RESET, timestamp, philo->id);
+		printf(BBLUE"%ld %d has taken a fork\n"RESET, timestamp, philo->id);
 	set_mutex(&philo->program->printf_mtx, UNLOCK);
 }
 
@@ -99,7 +99,7 @@ void	take_right_fork(t_philo *philo)
 	philo->right_fork->taken = true;
 	set_mutex(&philo->program->printf_mtx, LOCK);
 	if (check_end(philo->program) == false)
-		printf(BBLUE"%ld %d has taken the right fork\n"RESET, timestamp, philo->id);
+		printf(BBLUE"%ld %d has taken a fork\n"RESET, timestamp, philo->id);
 	set_mutex(&philo->program->printf_mtx, UNLOCK);
 }
 void	release_forks(t_philo *philo)
