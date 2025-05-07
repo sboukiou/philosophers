@@ -55,21 +55,24 @@ void	*philosopher(void *args)
 	while (true)
 	{
 		if (philo_finished(philo) == true)
-			return (NULL);
+		{
+			set_bool(&philo->program->end_of_simu, true, &philo->program->end_of_simu_mtx);
+			return (print_info(philo->program, "Philo is full"), NULL);
+		}
 		if (check_end(philo->program) == true)
 			return (NULL);
 		if (get_priority(philo))
 		{
 			if (philo->id % 2 == 0)
 			{
-				take_left_fork(philo);
 				take_right_fork(philo);
+				take_left_fork(philo);
 				eat(philo);
 			}
 			else
 			{
-				take_right_fork(philo);
 				take_left_fork(philo);
+				take_right_fork(philo);
 				eat(philo);
 			}
 			release_forks(philo);
