@@ -22,7 +22,7 @@ static int	start_philos(t_program *prog)
 	while (i < prog->philo_count)
 	{
 		philo = &prog->philos[i];
-		philo->last_meal_time = prog->start_time + 1;
+		philo->last_meal_time = prog->start_time;
 		thread_cr = pthread_create(&philo->thread_id, NULL, philosopher, prog->philos + i);
 		if (thread_cr != SUCCESS)
 			return (FAIL);
