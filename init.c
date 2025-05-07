@@ -63,7 +63,7 @@ static int	init_philos(t_program *prog)
 	{
 		philo = prog->philos + count;
 		philo->meal_count = 0;
-		philo->last_meal_time = get_current_time(prog, MSEC);
+		/*philo->last_meal_time = get_current_time(prog, MSEC);*/
 		philo->program =  prog;
 		philo->id = count + 1;
 		philo->right_fork = prog->forks + philo->id - 1;
