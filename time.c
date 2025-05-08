@@ -18,17 +18,27 @@ time_t	get_current_time(t_program *prog, t_time unit)
 {
 	struct timeval	tv;
 	struct timezone	tz;
+	time_t	current_time;
 	if (gettimeofday(&tv, &tz) != SUCCESS)
 	{
 		print_error(prog, "Failed to fetch current time (gettimeofday)");
 		return (FAIL);
 	}
 	if (unit == MSEC)
-		return ((time_t)tv.tv_sec * 1000 + (time_t)tv.tv_usec / 1000);
+	{
+		current_time = (time_t)tv.tv_sec * 1000 + (time_t)tv.tv_usec / 1000;
+		return (current_time - prog->start_time);
+	}
 	if (unit == USEC)
-		return (tv.tv_sec * 1e6 + tv.tv_usec);
+	{
+		current_time = tv.tv_sec * 1e6 + tv.tv_usec;
+		return (current_time - prog->start_time * 1000);
+	}
 	if (unit == SEC)
-		return (tv.tv_sec + tv.tv_usec / 1e6);
+	{
+		current_time = tv.tv_sec + tv.tv_usec / 1e6;
+		return (current_time - prog->start_time / 1000);
+	}
 	print_error(prog, "Wrong time unit given");
 	return (FAIL);
 }
@@ -50,7 +60,7 @@ int	usnooze(t_program *prog, int time)
 		return (FAIL);
 	while (elapsed_time < start_time + time)
 	{
-		usleep(10);
+		usleep(100);
 		elapsed_time = get_current_time(prog, MSEC);
 		if (elapsed_time == FAIL)
 			return (FAIL);
