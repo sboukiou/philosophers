@@ -22,7 +22,6 @@ static int	start_philos(t_program *prog)
 	while (i < prog->philo_count)
 	{
 		philo = &prog->philos[i];
-		philo->last_meal_time = prog->start_time;
 		thread_cr = pthread_create(&philo->thread_id, NULL, philosopher, prog->philos + i);
 		if (thread_cr != SUCCESS)
 			return (FAIL);
@@ -35,6 +34,7 @@ int	start_dinner(t_program *prog)
 {
 	if (!prog)
 		return (FAIL);
+	prog->start_time = 0;
 	prog->start_time = get_current_time(prog, MSEC);
 	start_philos(prog);
 	monitor(prog);
