@@ -52,31 +52,34 @@ void	*philosopher(void *args)
 		return (NULL);
 	philo = (t_philo *)args;
 	wait_all_threads(philo->program);
+	philo->last_meal_time = get_current_time(philo->program, MSEC);
 	while (true)
 	{
-		if (philo_finished(philo) == true)
-			return (print_info(philo->program, "Philo is full"), NULL);
 		if (check_end(philo->program) == true)
 			return (NULL);
 		if (get_priority(philo))
 		{
 			if (philo->id % 2 == 0)
 			{
-				take_right_fork(philo);
 				take_left_fork(philo);
+				take_right_fork(philo);
 				eat(philo);
 			}
 			else
 			{
-				take_left_fork(philo);
 				take_right_fork(philo);
+				take_left_fork(philo);
 				eat(philo);
 			}
 			release_forks(philo);
 		}
-		else
-			usnooze(philo->program, philo->program->time_to_sleep / 2);
-		usnooze(philo->program, philo->program->time_to_sleep / 2);
+		if (check_end(philo->program) == true)
+			return (NULL);
+		if (philo_finished(philo) == true)
+			return (NULL);
+		usnooze(philo->program, philo->program->time_to_sleep);
+		if (check_end(philo->program) == true)
+			return (NULL);
 		think(philo);
 	}
 	return (NULL);
