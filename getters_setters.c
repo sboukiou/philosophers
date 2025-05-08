@@ -46,19 +46,19 @@ void	set_bool(bool *target, bool value, pthread_mutex_t *mtx)
 bool	get_priority(t_philo *philo)
 {
 	int	iter;
-	int	meal_count;
-	int	val;
+	time_t	last_meal_time;
+	time_t	val;
 	t_program	*prog;
 
 	if (!philo || !philo->program)
 		return (false);
 	prog = philo->program;
 	iter = 0;
-	meal_count = get_number(&philo->meal_count, &philo->meal_count_mtx);
+	last_meal_time = philo->last_meal_time;
 	while (iter < prog->philo_count)
 	{
-		val = get_number(&prog->philos[iter].meal_count, &prog->philos[iter].meal_count_mtx) ;
-		if (val < meal_count)
+		val = prog->philos->last_meal_time;
+		if (val < last_meal_time)
 			return (false);
 		iter++;
 	}
