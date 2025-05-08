@@ -46,7 +46,6 @@ void	cleanup(t_program *program)
 		return ;
 	if (destroy_program_locks(program) != SUCCESS)
 		print_error(program, "Failed to destroy all the locks !! Leaving ...");
-	print_info(program, "Freeing program resources");
 	free(program->philos);
 	free(program->forks);
 	free(program);
