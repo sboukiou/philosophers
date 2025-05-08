@@ -27,6 +27,7 @@ void	think(t_philo *philo)
 	}
 	timestamp = get_current_time(philo->program, MSEC);
 	printf(UPURPLE"%ld %d is thinking\n"RESET, timestamp, philo->id);
+	/*usnooze(philo->program, 10);*/
 	set_mutex(&philo->program->printf_mtx, UNLOCK);
 }
 
@@ -61,13 +62,12 @@ void	snooze(t_philo *philo)
 		return ;
 	set_status(philo, SLEEPING);
 	set_mutex(&philo->program->printf_mtx, LOCK);
-	timestamp = get_current_time(philo->program, MSEC);
 	if (get_bool(&philo->program->end_of_simu, &philo->program->end_of_simu_mtx) == true)
 	{
 		set_mutex(&philo->program->printf_mtx, UNLOCK);
 		return ;
 	}
-
+	timestamp = get_current_time(philo->program, MSEC);
 	printf(BYELLOW"%ld %d is sleeping\n"RESET, timestamp, philo->id);
 	set_mutex(&philo->program->printf_mtx, UNLOCK);
 	usnooze(philo->program, philo->program->time_to_sleep);
@@ -94,7 +94,6 @@ void	take_left_fork(t_philo *philo)
 	if (!philo || !philo->program)
 		return ;
 	set_status(philo, WAITING);
-	timestamp = get_current_time(philo->program, MSEC);
 	set_mutex(&philo->left_fork->fork_mtx, LOCK);
 	philo->left_fork->taken = true;
 	set_mutex(&philo->program->printf_mtx, LOCK);
@@ -103,7 +102,7 @@ void	take_left_fork(t_philo *philo)
 		set_mutex(&philo->program->printf_mtx, UNLOCK);
 		return ;
 	}
-
+	timestamp = get_current_time(philo->program, MSEC);
 	printf(BBLUE"%ld %d has taken a fork\n"RESET, timestamp, philo->id);
 	set_mutex(&philo->program->printf_mtx, UNLOCK);
 }
@@ -115,7 +114,6 @@ void	take_right_fork(t_philo *philo)
 	if (!philo || !philo->program)
 		return ;
 	set_status(philo, WAITING);
-	timestamp = get_current_time(philo->program, MSEC);
 	set_mutex(&philo->right_fork->fork_mtx, LOCK);
 	philo->right_fork->taken = true;
 	set_mutex(&philo->program->printf_mtx, LOCK);
@@ -124,6 +122,7 @@ void	take_right_fork(t_philo *philo)
 		set_mutex(&philo->program->printf_mtx, UNLOCK);
 		return ;
 	}
+	timestamp = get_current_time(philo->program, MSEC);
 	printf(BBLUE"%ld %d has taken a fork\n"RESET, timestamp, philo->id);
 	set_mutex(&philo->program->printf_mtx, UNLOCK);
 }
