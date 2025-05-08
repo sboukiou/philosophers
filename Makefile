@@ -3,7 +3,7 @@
 #  -g (Debug info)
 CC=cc
 RM=rm -f
-CFLAGS=-Wall -Werror -Wextra -pthread -g
+CFLAGS=-Wall -Werror -Wextra -pthread
 NAME=philo
 TEST=test
 TEST_SRC=test.c
