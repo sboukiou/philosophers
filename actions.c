@@ -27,7 +27,7 @@ void	think(t_philo *philo)
 	}
 	timestamp = get_current_time(philo->program, MSEC);
 	printf(UPURPLE"%ld %d is thinking\n"RESET, timestamp, philo->id);
-	/*usnooze(philo->program, 10);*/
+	usnooze(philo->program, 10);
 	set_mutex(&philo->program->printf_mtx, UNLOCK);
 }
 
