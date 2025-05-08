@@ -92,3 +92,23 @@ bool	get_forks_available(t_philo *philo)
 		return (false);
 	return (true);
 }
+
+e_status	get_status(t_philo *philo)
+{
+	e_status	val;
+	if (!philo)
+		return (DEAD);
+	set_mutex(&philo->status_mtx, LOCK);
+	val = philo->status;
+	set_mutex(&philo->status_mtx, UNLOCK);
+	return (val);
+}
+
+void	set_status(t_philo *philo, e_status status)
+{
+	if (!philo)
+		return ;
+	set_mutex(&philo->status_mtx, LOCK);
+	philo->status = status;
+	set_mutex(&philo->status_mtx, UNLOCK);
+}

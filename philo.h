@@ -60,5 +60,7 @@ int	get_number(int *target, pthread_mutex_t *mtx);
 void	set_number(int *target, int value, pthread_mutex_t *mtx);
 bool	get_priority(t_philo *philo);
 bool	get_forks_available(t_philo *philo);
+void	set_status(t_philo *philo, e_status status);
+e_status	get_status(t_philo *philo);
 
 #endif

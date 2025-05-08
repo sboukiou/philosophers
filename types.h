@@ -15,12 +15,14 @@
 
 #include "./includes.h"
 
-enum	e_status
+typedef enum e_status
 {
 	THINKING,
 	EATING,
-	SLEEPING
-};
+	SLEEPING,
+	DEAD,
+	WAITING
+}	e_status;
 
 typedef struct s_philo t_philo;
 
@@ -64,6 +66,8 @@ struct s_philo
 	time_t		last_meal_time;
 	int		meal_count;
 	pthread_mutex_t	meal_count_mtx;
+	e_status	status;
+	pthread_mutex_t	status_mtx;
 };
 
 typedef	enum e_mtx
