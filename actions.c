@@ -23,7 +23,6 @@ void	think(t_philo *philo)
 	if (check_end(philo->program) == false)
 		printf(UPURPLE"%ld %d is thinking\n"RESET, timestamp, philo->id);
 	set_mutex(&philo->program->printf_mtx, UNLOCK);
-	usnooze(philo->program, 60);
 }
 
 void	eat(t_philo *philo)
