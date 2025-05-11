@@ -60,7 +60,7 @@ int	usnooze(t_program *prog, int time)
 		return (FAIL);
 	while (elapsed_time < start_time + time)
 	{
-		usleep(100);
+		usleep(150);
 		elapsed_time = get_current_time(prog, MSEC);
 		if (elapsed_time == FAIL)
 			return (FAIL);
