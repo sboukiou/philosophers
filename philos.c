@@ -55,29 +55,28 @@ void	*philosopher(void *args)
 	philo->last_meal_time = get_current_time(philo->program, MSEC);
 	while (true)
 	{
-		if (check_end(philo->program) == true)
-			return (NULL);
 		if (philo->id % 2 == 0)
 		{
 			take_left_fork(philo);
 			take_right_fork(philo);
-			eat(philo);
 		}
 		else
 		{
 			take_right_fork(philo);
 			take_left_fork(philo);
-			eat(philo);
 		}
+		eat(philo);
 		release_forks(philo);
-		if (check_end(philo->program) == true)
-			return (NULL);
 		if (philo_finished(philo) == true)
+			return (NULL);
+		if (check_end(philo->program) == true)
 			return (NULL);
 		snooze(philo);
 		if (check_end(philo->program) == true)
 			return (NULL);
 		think(philo);
+		if (check_end(philo->program) == true)
+			return (NULL);
 	}
 	return (NULL);
 }
