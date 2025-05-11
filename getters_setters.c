@@ -84,15 +84,6 @@ void	set_number(int *target, int value, pthread_mutex_t *mtx)
 	set_mutex(mtx, UNLOCK);
 }
 
-bool	get_forks_available(t_philo *philo)
-{
-	if (get_bool(&philo->left_fork->taken, &philo->left_fork->taken_mtx) == true)
-		return (false);
-	if (get_bool(&philo->right_fork->taken, &philo->right_fork->taken_mtx) == true)
-		return (false);
-	return (true);
-}
-
 e_status	get_status(t_philo *philo)
 {
 	e_status	val;
