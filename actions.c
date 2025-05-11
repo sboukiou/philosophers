@@ -27,7 +27,7 @@ void	think(t_philo *philo)
 	}
 	timestamp = get_current_time(philo->program, MSEC);
 	printf(UPURPLE"%ld %d is thinking\n"RESET, timestamp, philo->id);
-	/*usnooze(philo->program, 1);*/
+	// usnooze(philo->program, 1);
 	set_mutex(&philo->program->printf_mtx, UNLOCK);
 }
 
@@ -95,7 +95,6 @@ void	take_left_fork(t_philo *philo)
 		return ;
 	set_status(philo, WAITING);
 	set_mutex(&philo->left_fork->fork_mtx, LOCK);
-	philo->left_fork->taken = true;
 	set_mutex(&philo->program->printf_mtx, LOCK);
 	if (get_bool(&philo->program->end_of_simu, &philo->program->end_of_simu_mtx) == true)
 	{
@@ -115,7 +114,6 @@ void	take_right_fork(t_philo *philo)
 		return ;
 	set_status(philo, WAITING);
 	set_mutex(&philo->right_fork->fork_mtx, LOCK);
-	philo->right_fork->taken = true;
 	set_mutex(&philo->program->printf_mtx, LOCK);
 	if (get_bool(&philo->program->end_of_simu, &philo->program->end_of_simu_mtx) == true)
 	{
@@ -130,7 +128,5 @@ void	release_forks(t_philo *philo)
 {
 	set_status(philo, WAITING);
 	set_mutex(&philo->left_fork->fork_mtx, UNLOCK);
-	philo->left_fork->taken = false;
 	set_mutex(&philo->right_fork->fork_mtx, UNLOCK);
-	philo->right_fork->taken = false;
 }
