@@ -30,8 +30,6 @@ typedef struct s_fork
 {
 	int 		id;
 	pthread_mutex_t	fork_mtx;
-	pthread_mutex_t	taken_mtx;
-	bool		taken;
 }	t_fork;
 
 /*[DATA]: ./philo 8 200 200 150 [100]*/
@@ -51,7 +49,6 @@ typedef struct s_program
 	pthread_t	monitor;
 	pthread_mutex_t	philos_ready_mtx;
 	pthread_mutex_t	printf_mtx;
-	pthread_mutex_t	philo_died_mtx;
 	pthread_mutex_t	end_of_simu_mtx;
 	pthread_mutex_t	number_of_meals_mtx;
 }	t_program;

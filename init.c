@@ -19,8 +19,6 @@ static int	init_program_data(t_program *prog)
 	prog->philo_died = false;
 	if (set_mutex(&prog->printf_mtx, INIT) != SUCCESS)
 		return (FAIL);
-	if (set_mutex(&prog->philo_died_mtx, INIT) != SUCCESS)
-		return (FAIL);
 	if (set_mutex(&prog->philos_ready_mtx, INIT) != SUCCESS)
 		return (FAIL);
 	if (set_mutex(&prog->number_of_meals_mtx, INIT) != SUCCESS)
@@ -49,7 +47,7 @@ static int	init_program_memory(t_program *prog)
 		print_error(NULL, "Failed to allocate forks !");
 		return (FAIL);
 	}
-	memset(prog->philos, '\0', sizeof(t_fork) * prog->philo_count);
+	memset(prog->forks, '\0', sizeof(t_fork) * prog->philo_count);
 	return (SUCCESS);
 }
 
@@ -89,10 +87,7 @@ static int	init_forks(t_program *prog)
 	{
 		fork = &prog->forks[iter];
 		fork->id = iter + 1;
-		fork->taken = false;
 		if (set_mutex(&fork->fork_mtx, INIT) != SUCCESS)
-			return (FAIL);
-		if (set_mutex(&fork->taken_mtx, INIT) != SUCCESS)
 			return (FAIL);
 		iter++;
 	}

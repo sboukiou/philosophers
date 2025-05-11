@@ -20,8 +20,6 @@ static int	destroy_program_locks(t_program *prog)
 		return (FAIL);
 	if (set_mutex(&prog->philos_ready_mtx, DESTROY) != SUCCESS)
 		return (FAIL);
-	if (set_mutex(&prog->philo_died_mtx, DESTROY) != SUCCESS)
-		return (FAIL);
 	if (set_mutex(&prog->printf_mtx, DESTROY) != SUCCESS)
 		return (FAIL);
 	if (set_mutex(&prog->end_of_simu_mtx, DESTROY) != SUCCESS)
@@ -30,8 +28,6 @@ static int	destroy_program_locks(t_program *prog)
 	while (count < prog->philo_count)
 	{
 		if (set_mutex(&prog->forks[count].fork_mtx, DESTROY) != SUCCESS)
-			return (FAIL);
-		if (set_mutex(&prog->forks[count].taken_mtx, DESTROY) != SUCCESS)
 			return (FAIL);
 		if (set_mutex(&prog->philos[count].meal_count_mtx, DESTROY) != SUCCESS)
 			return (FAIL);
