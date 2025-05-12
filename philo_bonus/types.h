@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 09:47:20 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/05/05 14:10:55 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:08:37 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,5 @@ typedef	enum e_mtx
 	UNLOCK,
 	DESTROY,
 }	t_mtx;
-
-enum e_time
-{
-	MSEC,
-	USEC,
-	SEC,
-};
-typedef enum e_time	t_time;
-
 
 #endif
