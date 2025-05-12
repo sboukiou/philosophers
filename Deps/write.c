@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printers.c                                         :+:      :+:    :+:   */
+/*   write.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:30:18 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/21 16:31:23 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/12 09:39:48 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ void	write_status(t_philo *philo, e_status status)
 	char	*str;
 
 	if (status == THINKING)
-		str = "is thinking";
+		str = UPURPLE"is thinking"RESET;
 	if (status == EATING)
-		str = "is eating";
+		str = BGREEN"is eating"RESET;
 	if (status == SLEEPING)
-		str = "is sleeping";
+		str = BBLUE"is sleeping"RESET;
 	if (status == TAKEN_FORK)
-		str = "has taken a fork";
+		str = BYELLOW"has taken a fork"RESET;
 	if (status == DEAD)
-		str = "died";
+		str = BRED"died"RESET;
 	timestamp = get_current_time(philo->program);
 	set_mutex(&philo->program->printf_mtx, LOCK);
 	if (get_bool(&philo->program->end_of_simu, &philo->program->end_of_simu_mtx) == true)
