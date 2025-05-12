@@ -27,9 +27,7 @@
 
 /* Prototyeps for time functions */
 int	usnooze(t_program *prog, int time);
-time_t	get_current_time_msec(t_program *program);
-time_t	get_time_of_last_meal(t_philo philo);
-time_t	get_current_time(t_program *prog, t_time unit);
+time_t	get_current_time(t_program *prog);
 
 /* Parsing functions */
 t_program	*parser(int ac, char **av);

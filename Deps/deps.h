@@ -27,6 +27,7 @@ void	_bzero(void *addr, size_t size);
 void	print_info(t_program *program, char *info);
 void	print_error(t_program *program, char *error);
 
+void	write_status(t_philo *philo, e_status status);
 void	think(t_philo *philo);
 void	eat(t_philo *philo);
 void	snooze(t_philo *philo);

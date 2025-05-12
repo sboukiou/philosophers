@@ -52,7 +52,7 @@ void	*philosopher(void *args)
 		return (NULL);
 	philo = (t_philo *)args;
 	wait_all_threads(philo->program);
-	philo->last_meal_time = get_current_time(philo->program, MSEC);
+	philo->last_meal_time = get_current_time(philo->program);
 	while (true)
 	{
 		if (philo->id % 2 == 0)

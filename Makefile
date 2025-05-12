@@ -11,7 +11,7 @@ TEST_SRC=test.c
 SOURCES=main.c parser.c time.c cleanup.c init.c philos.c getters_setters.c monitor.c actions.c dinner.c
 OBJS=$(SOURCES:%.c=%.o)
 
-DEPS_SOURCES=./Deps/atoi.c ./Deps/isdigit.c ./Deps/strlen.c ./Deps/printers.c
+DEPS_SOURCES=./Deps/atoi.c ./Deps/isdigit.c ./Deps/strlen.c ./Deps/write.c
 DEPS_OBJS=$(DEPS_SOURCES:%.c=%.o)
 
 OBJS_ALL=$(OBJS) $(DEPS_OBJS)

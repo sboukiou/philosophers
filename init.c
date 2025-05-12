@@ -30,7 +30,8 @@ static int	init_program_data(t_program *prog)
 
 static int	init_program_memory(t_program *prog)
 {
-	if (!prog) {
+	if (!prog)
+	{
 		print_error(NULL, "Program was not allocated properly !");
 		return (FAIL);
 	}

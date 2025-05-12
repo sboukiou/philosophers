@@ -30,12 +30,15 @@ static bool	is_dead(t_philo *philo)
 {
 	time_t	current_time;
 	time_t	last_meal_time;
+	e_status	status;
 
 	if (!philo)
 		return (true);
-	current_time = get_current_time(philo->program, MSEC);
+	current_time = get_current_time(philo->program);
 	last_meal_time = philo->last_meal_time;
-	if (current_time - last_meal_time > philo->program->time_to_die)
+
+	status = get_status(philo);
+	if (current_time - last_meal_time > philo->program->time_to_die && status != EATING)
 		return (true);
 	return (false);
 }
@@ -64,6 +67,7 @@ void	*monitor_routine(void *arg)
 	prog = (t_program *)arg;
 	while (get_bool(&prog->end_of_simu, &prog->end_of_simu_mtx) == false)
 	{
+		usnooze(prog, 1);
 		i = 0;
 		while (i < prog->philo_count && !get_bool(&prog->end_of_simu, &prog->end_of_simu_mtx))
 		{

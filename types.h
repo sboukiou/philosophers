@@ -21,7 +21,8 @@ typedef enum e_status
 	EATING,
 	SLEEPING,
 	DEAD,
-	WAITING
+	WAITING,
+	TAKEN_FORK
 }	e_status;
 
 typedef struct s_philo t_philo;
