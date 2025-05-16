@@ -1,15 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prototypes.h                                       :+:      :+:    :+:   */
+/*   strlen.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:33:44 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/05/15 11:33:48 by sboukiou         ###   ########.fr       */
+/*   Created: 2025/04/15 14:18:06 by sboukiou          #+#    #+#             */
+/*   Updated: 2025/04/15 14:18:53 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PROTOTYPES_H
-# define PROTOTYPES_H
-#endif
+# include "./deps.h"
+
+size_t	_strlen(const char *str)
+{
+	size_t	len;
+	if (!str)
+		return (0);
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
+}
