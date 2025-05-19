@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 09:49:19 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/05/01 17:16:43 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/19 09:07:52 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,8 @@
 # include <limits.h> /* INT_MIN & INT_MAX */
 #include <sys/time.h> /* For gettimeofday & settimeofday */
 #include <string.h> /* For memset */
+#include <semaphore.h> /* For memset */
+#include <sys/wait.h> /* For memset */
+#include <sys/types.h> /* For memset */
 
 #endif

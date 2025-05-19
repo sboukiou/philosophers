@@ -43,15 +43,13 @@ typedef struct s_program
 	int	number_of_meals;
 	time_t	start_time;
 	t_philo	*philos;
-	t_fork		*forks;
 	bool	philos_ready;
 	bool		philo_died;
 	bool		end_of_simu;
 	pthread_t	monitor;
-	pthread_mutex_t	philos_ready_mtx;
-	pthread_mutex_t	printf_mtx;
-	pthread_mutex_t	end_of_simu_mtx;
-	pthread_mutex_t	number_of_meals_mtx;
+	sem_t		philos_ready_sem;
+	sem_t		philos_ready_philo_died_sem;
+	sem_t		end_of_simu_sem;
 }	t_program;
 
 struct s_philo
