@@ -6,7 +6,7 @@
 /*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 09:47:20 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/05/05 14:10:55 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/05/20 20:45:09 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ typedef struct s_program
 	int	number_of_meals;
 	time_t	start_time;
 	t_philo	*philos;
-	bool	philos_ready;
+	bool	philos_all_ready;
 	bool		philo_died;
-	bool		end_of_simu;
+	bool		end_of_simulation;
 	pthread_t	monitor;
-	sem_t		philos_ready_sem;
-	sem_t		philos_ready_philo_died_sem;
-	sem_t		end_of_simu_sem;
+	sem_t		*philos_all_ready_sem;
+	sem_t		*philos_ready_philo_died_sem;
+	sem_t		*end_of_simulation_sem;
 }	t_program;
 
 struct s_philo

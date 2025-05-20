@@ -3,107 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
+/*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 16:57:16 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/05/05 14:11:10 by sboukiou         ###   ########.fr       */
+/*   Created: 2025/05/20 20:37:50 by sboukiou          #+#    #+#             */
+/*   Updated: 2025/05/20 20:43:01 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./philo.h"
+#include "./philo_bonus.h"
 
-static int	init_program_data(t_program *prog)
+#define LOCK 1
+#define GLOBAL_SEM 0644
+
+static time_t	get_current_time(t_program *prog)
 {
-	prog->philos_ready = false;
-	prog->end_of_simu = false;
+	struct timeval	tv;
+	struct timezone	tz;
+	time_t	current_time;
+	if (gettimeofday(&tv, &tz) != SUCCESS)
+	{
+		print_error(prog, "Failed to fetch current time (gettimeofday)");
+		return (FAIL);
+	}
+		current_time = (time_t)tv.tv_sec * 1000 + (time_t)tv.tv_usec / 1000;
+		return (current_time - prog->start_time);
+}
+void	initialize_program_data(t_program *prog)
+{
+	prog->start_time = get_current_time(prog);
+	prog->philos_all_ready = false;
 	prog->philo_died = false;
-	if (set_mutex(&prog->printf_mtx, INIT) != SUCCESS)
-		return (FAIL);
-	if (set_mutex(&prog->philos_ready_mtx, INIT) != SUCCESS)
-		return (FAIL);
-	if (set_mutex(&prog->number_of_meals_mtx, INIT) != SUCCESS)
-		return (FAIL);
-	if (set_mutex(&prog->end_of_simu_mtx, INIT) != SUCCESS)
-		return (FAIL);
-	return (SUCCESS);
-}
-
-static int	init_program_memory(t_program *prog)
-{
-	if (!prog)
-	{
-		print_error(NULL, "Program was not allocated properly !");
-		return (FAIL);
-	}
-	prog->philos = (t_philo *)malloc(sizeof(t_philo) * prog->philo_count);
-	if (!prog->philos)
-	{
-		print_error(prog, "Failed to allocate philosophers !");
-		return (FAIL);
-	}
-	memset(prog->philos, '\0', sizeof(t_philo) * prog->philo_count);
-	prog->forks = (t_fork *)malloc(sizeof(t_fork) * prog->philo_count);
-	if (!prog->forks)
-	{
-		print_error(NULL, "Failed to allocate forks !");
-		return (FAIL);
-	}
-	memset(prog->forks, '\0', sizeof(t_fork) * prog->philo_count);
-	return (SUCCESS);
-}
-
-static int	init_philos(t_program *prog)
-{
-	int	count;
-	t_philo	*philo;
-
-	count= 0;
-	while (count< prog->philo_count)
-	{
-		philo = prog->philos + count;
-		philo->meal_count = 0;
-		philo->program =  prog;
-		philo->id = count + 1;
-		philo->right_fork = prog->forks + philo->id - 1;
-		philo->left_fork = prog->forks + (philo->id % prog->philo_count);
-		if (set_mutex(&philo->meal_count_mtx, INIT) != SUCCESS)
-			return (FAIL);
-		if (set_mutex(&philo->status_mtx, INIT) != SUCCESS)
-			return (FAIL);
-		philo->status = WAITING;
-		count++;
-	}
-	return (SUCCESS);
-}
-
-static int	init_forks(t_program *prog)
-{
-	int	iter;
-	t_fork	*fork;
-
-	iter = 0;
-	if (!prog)
-		return (FAIL);
-	while (iter < prog->philo_count)
-	{
-		fork = &prog->forks[iter];
-		fork->id = iter + 1;
-		if (set_mutex(&fork->fork_mtx, INIT) != SUCCESS)
-			return (FAIL);
-		iter++;
-	}
-	return (SUCCESS);
-}
-
-int	init(t_program	*program)
-{
-	if (init_program_memory(program) != SUCCESS)
-		return (FAIL);
-	if (init_forks(program) != SUCCESS)
-		return (print_info(NULL, "Failed to initialize forks"), FAIL);
-	if (init_philos(program) != SUCCESS)
-		return (print_error(NULL, "Failed to initialized philosophres"), FAIL);
-	if (init_program_data(program) != SUCCESS)
-		return (print_error(NULL, "Failed to initialized program data"), FAIL);
-	return (SUCCESS);
+	prog->end_of_simulation = false;
+	sem_open("philos_all_ready_sem", O_CREAT, GLOBAL_SEM, LOCK);
+	sem_open("philo_died", O_CREAT, GLOBAL_SEM, LOCK);
+	sem_open("end_of_simulation", O_CREAT, GLOBAL_SEM, LOCK);
 }
