@@ -55,6 +55,8 @@ void	*philosopher(void *args)
 	philo->last_meal_time = get_current_time(philo->program);
 	while (true)
 	{
+		if (philo->id % 2)
+			usleep(300);
 		if (philo->id % 2 == 0)
 		{
 			take_left_fork(philo);

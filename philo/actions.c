@@ -26,9 +26,9 @@ void	eat(t_philo *philo)
 
 	if (!philo || !philo->program)
 		return ;
-	philo->last_meal_time = get_current_time(philo->program);
 	set_status(philo, EATING);
 	write_status(philo, EATING);
+	philo->last_meal_time = get_current_time(philo->program);
 	usnooze(philo->program, philo->program->time_to_eat);
 	meal_val = get_number(&philo->meal_count, &philo->meal_count_mtx);
 	set_number(&philo->meal_count, meal_val + 1, &philo->meal_count_mtx);
