@@ -12,7 +12,7 @@
 
 #include "./philo_bonus.h"
 
-static void	loop_checking(t_program *prog)
+void	loop_checking(t_program *prog)
 {
 	t_philo	*philo;
 	while (is_simulation_finished(prog) == false)
@@ -30,7 +30,8 @@ static void	wait_for_philos(t_program *prog)
 {
 	while (are_philos_all_ready(prog) == false)
 		;
-	printf(BBLUE"loop ended all created and ready\n"RESET);
+
+	print_info(prog, "Loop ended, all philos are ready\n");
 }
 
 void	*monitor(void *arg)
@@ -39,11 +40,15 @@ void	*monitor(void *arg)
 
 	prog = (t_program *)arg;
 	wait_for_philos(prog);
-	loop_checking(prog);
+	/*loop_checking(prog);*/
 	return (NULL);
 }
 
 void	launch_monitor(t_program *prog)
 {
-	pthread_create(&prog->monitor, NULL, monitor, NULL);
+	if (pthread_create(&prog->monitor, NULL, monitor, prog) != SUCCESS)
+	{
+		print_error(prog, "Failed to create the monitor thread\n");
+		exit(0);
+	}
 }
