@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 /*[DATA]: ./philo [number_of_philosophers]
  * [time_to_die]
