@@ -48,7 +48,7 @@ typedef struct s_program
 	bool		end_of_simulation;
 	pthread_t	monitor;
 	sem_t		*philos_all_ready_sem;
-	sem_t		*philos_ready_philo_died_sem;
+	sem_t		*philo_died_sem;
 	sem_t		*end_of_simulation_sem;
 }	t_program;
 
