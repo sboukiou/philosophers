@@ -48,7 +48,7 @@ void	initialize_program_data(t_program *prog)
 	prog->philos_all_ready_sem = sem_open("philos_all_ready_sem", O_CREAT, GLOBAL_SEM, LOCK);
 	prog->philo_died_sem = sem_open("philo_died", O_CREAT, GLOBAL_SEM, LOCK);
 	prog->end_of_simulation_sem = sem_open("end_of_simulation", O_CREAT, GLOBAL_SEM, LOCK);
-	prog->write_sem = sem_open("write", O_CREAT, GLOBAL_SEM, LOCK);
+	prog->write_sem = sem_open("write_sem", O_CREAT, GLOBAL_SEM, LOCK);
 	if (!prog->philos_all_ready_sem || !prog->philo_died_sem
 		|| !prog->end_of_simulation_sem || !prog->write_sem)
 	{
