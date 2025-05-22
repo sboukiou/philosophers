@@ -8,7 +8,7 @@ NAME=philo
 TEST=test
 TEST_SRC=test.c
 
-SOURCES=main.c extracter.c init.c
+SOURCES=main.c extracter.c init.c monitor.c checker.c
 OBJS=$(SOURCES:%.c=%.o)
 
 DEPS_SOURCES=./Deps/atoi.c ./Deps/isdigit.c ./Deps/strlen.c
