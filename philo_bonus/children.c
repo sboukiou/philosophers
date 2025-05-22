@@ -7,7 +7,7 @@ void	philo_routine(t_philo *philo)
 {
 	if (!philo)
 		return ;
-	printf(BYELLOW"[INFO]: Philo with id %d created\n"RESET, philo->id);
+	print_info(philo->program, "A philo_created\n");
 	exit(0);
 }
 
@@ -19,7 +19,6 @@ void	children(t_program *prog)
 	if (!prog)
 		return ;
 	main = getpid();
-	printf("Starting child loop\n");
 	for (int i = 0; i < prog->philo_count; i++)
 	{
 		if (getpid() == main)
