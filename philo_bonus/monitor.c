@@ -30,10 +30,20 @@ static void	wait_for_philos(t_program *prog)
 {
 	while (are_philos_all_ready(prog) == false)
 		;
+	printf(BBLUE"loop ended all created and ready\n"RESET);
+}
+
+void	*monitor(void *arg)
+{
+	t_program *prog;
+
+	prog = (t_program *)arg;
+	wait_for_philos(prog);
+	loop_checking(prog);
+	return (NULL);
 }
 
 void	launch_monitor(t_program *prog)
 {
-	wait_for_philos(prog);
-	loop_checking(prog);
+	pthread_create(&prog->monitor, NULL, monitor, NULL);
 }
