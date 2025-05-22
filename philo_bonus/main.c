@@ -28,8 +28,9 @@ int main(int ac, char **av)
 	printf("%d %d %d %d\n", prog.philo_count, prog.time_to_die, prog.time_to_eat, prog.time_to_sleep);
 	initialize_program_data(&prog);
 	printf(BBLUE"After program data init\n"RESET);
-	children(&prog);
 	launch_monitor(&prog);
+	children(&prog);
+	pthread_join(prog.monitor, NULL);
 	/*clean(prog);*/
 	return (0);
 }
