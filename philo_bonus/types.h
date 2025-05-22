@@ -51,6 +51,7 @@ typedef struct s_program
 	sem_t		*philo_died_sem;
 	sem_t		*end_of_simulation_sem;
 	sem_t		*write_sem;
+	sem_t		*forks_sem;
 }	t_program;
 
 struct s_philo
