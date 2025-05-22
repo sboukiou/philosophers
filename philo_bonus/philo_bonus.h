@@ -35,4 +35,5 @@ bool	has_philo_starved(t_philo *philo);
 void	stop_simulation(t_program *prog);
 bool	is_simulation_finished(t_program *prog);
 bool	are_philos_all_ready(t_program *prog);
+void	children(t_program *prog);
 #endif

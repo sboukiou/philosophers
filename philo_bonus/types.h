@@ -50,6 +50,7 @@ typedef struct s_program
 	sem_t		*philos_all_ready_sem;
 	sem_t		*philo_died_sem;
 	sem_t		*end_of_simulation_sem;
+	sem_t		*write_sem;
 }	t_program;
 
 struct s_philo
@@ -57,7 +58,7 @@ struct s_philo
 	int		id;
 	t_fork		*right_fork;
 	t_fork		*left_fork;
-	pthread_t	thread_id;
+	pid_t		pid;
 	t_program	*program;
 	time_t		last_meal_time;
 	int		meal_count;
