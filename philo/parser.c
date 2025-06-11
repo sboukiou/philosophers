@@ -23,7 +23,7 @@ t_program	*parser(int ac, char **av)
 		print_info(NULL, "Usage: ./philo number_of_philos time_to_eat time_to_sleep tim_to_die [number_of_meals]");
 		return (NULL);
 	}
-	if (_atoi(av[1]) < 2 || _atoi(av[2]) < 1  ||
+	if (_atoi(av[1]) < 1 || _atoi(av[2]) < 1  ||
 		_atoi(av[3]) < 1 || _atoi(av[4]) < 2)
 	{
 		print_error(NULL, "Invalid arguments given ! Try again");
