@@ -14,15 +14,16 @@
 
 static int	start_philos(t_program *prog)
 {
-	int	i;
-	int	thread_cr;
+	int		i;
+	int		thread_cr;
 	t_philo	*philo;
 
 	i = 0;
 	while (i < prog->philo_count)
 	{
 		philo = &prog->philos[i];
-		thread_cr = pthread_create(&philo->thread_id, NULL, philosopher, prog->philos + i);
+		thread_cr = pthread_create(&philo->thread_id, NULL, philosopher,
+				prog->philos + i);
 		if (thread_cr != SUCCESS)
 			return (FAIL);
 		i++;

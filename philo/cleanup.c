@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "./philo.h"
+#include "./philo.h"
 
 static int	destroy_program_locks(t_program *prog)
 {

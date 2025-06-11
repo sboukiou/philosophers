@@ -12,7 +12,6 @@
 
 #include "./philo.h"
 
-
 int	set_mutex(pthread_mutex_t *mutex, t_mtx action)
 {
 	if (action == INIT)
@@ -45,9 +44,9 @@ void	set_bool(bool *target, bool value, pthread_mutex_t *mtx)
 
 bool	get_priority(t_philo *philo)
 {
-	int	iter;
-	time_t	last_meal_time;
-	time_t	val;
+	int			iter;
+	time_t		last_meal_time;
+	time_t		val;
 	t_program	*prog;
 
 	if (!philo || !philo->program)
