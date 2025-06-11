@@ -45,6 +45,8 @@ int	usnooze(t_program *prog, int time)
 		return (FAIL);
 	while (elapsed_time < start_time + time)
 	{
+		if (get_bool(&prog->end_of_simu, &prog->end_of_simu_mtx) == true)
+			return (SUCCESS);
 		usleep(150);
 		elapsed_time = get_current_time(prog);
 		if (elapsed_time == FAIL)
