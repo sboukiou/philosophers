@@ -62,6 +62,7 @@ struct s_philo
 	pthread_t	thread_id;
 	t_program	*program;
 	time_t		last_meal_time;
+	pthread_mutex_t	last_meal_time_mtx;
 	int		meal_count;
 	pthread_mutex_t	meal_count_mtx;
 	e_status	status;

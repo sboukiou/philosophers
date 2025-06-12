@@ -28,7 +28,7 @@ void	eat(t_philo *philo)
 		return ;
 	set_status(philo, EATING);
 	write_status(philo, EATING);
-	philo->last_meal_time = get_current_time(philo->program);
+	set_last_meal_time(philo, get_current_time(philo->program));
 	usnooze(philo->program, philo->program->time_to_eat);
 	meal_val = get_number(&philo->meal_count, &philo->meal_count_mtx);
 	set_number(&philo->meal_count, meal_val + 1, &philo->meal_count_mtx);
@@ -56,6 +56,13 @@ void	take_left_fork(t_philo *philo)
 {
 	if (!philo || !philo->program)
 		return ;
+	if (philo->program->philo_count == 1)
+	{
+		while (get_bool(&philo->program->end_of_simu, &philo->program->end_of_simu_mtx) == false)
+			;
+		set_mutex(&philo->right_fork->fork_mtx, UNLOCK);
+		return ;
+	}
 	set_status(philo, TAKEN_FORK);
 	set_mutex(&philo->left_fork->fork_mtx, LOCK);
 	write_status(philo, TAKEN_FORK);

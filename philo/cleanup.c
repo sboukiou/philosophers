@@ -33,6 +33,8 @@ static int	destroy_program_locks(t_program *prog)
 			return (FAIL);
 		if (set_mutex(&prog->philos[count].status_mtx, DESTROY) != SUCCESS)
 			return (FAIL);
+		if (set_mutex(&prog->philos[count].last_meal_time_mtx, DESTROY) != SUCCESS)
+			return (FAIL);
 		count++;
 	}
 	return (SUCCESS);
@@ -42,8 +44,7 @@ void	cleanup(t_program *program)
 {
 	if (!program)
 		return ;
-	if (destroy_program_locks(program) != SUCCESS)
-		print_error(program, "Failed to destroy all the locks !! Leaving ...");
+	destroy_program_locks(program);
 	free(program->philos);
 	free(program->forks);
 	free(program);

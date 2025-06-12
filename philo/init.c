@@ -70,6 +70,8 @@ static int	init_philos(t_program *prog)
 			return (FAIL);
 		if (set_mutex(&philo->status_mtx, INIT) != SUCCESS)
 			return (FAIL);
+		if (set_mutex(&philo->last_meal_time_mtx, INIT) != SUCCESS)
+			return (FAIL);
 		philo->status = WAITING;
 		count++;
 	}
