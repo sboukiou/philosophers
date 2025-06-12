@@ -52,7 +52,7 @@ void	*philosopher(void *args)
 		return (NULL);
 	philo = (t_philo *)args;
 	wait_all_threads(philo->program);
-	philo->last_meal_time = get_current_time(philo->program);
+	set_last_meal_time(philo, get_current_time(philo->program));
 	while (true)
 	{
 		if (philo->id % 2)
@@ -67,7 +67,11 @@ void	*philosopher(void *args)
 			take_right_fork(philo);
 			take_left_fork(philo);
 		}
+		if (check_end(philo->program) == true)
+			return (NULL);
 		eat(philo);
+		if (check_end(philo->program) == true)
+			return (NULL);
 		release_forks(philo);
 		if (philo_finished(philo) == true)
 			return (NULL);

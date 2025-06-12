@@ -35,7 +35,7 @@ static bool	is_dead(t_philo *philo)
 	if (!philo)
 		return (true);
 	current_time = get_current_time(philo->program);
-	last_meal_time = philo->last_meal_time;
+	last_meal_time = get_last_meal_time(philo);
 
 	status = get_status(philo);
 	if (current_time - last_meal_time > philo->program->time_to_die && status != EATING)
