@@ -42,28 +42,6 @@ void	set_bool(bool *target, bool value, pthread_mutex_t *mtx)
 	set_mutex(mtx, UNLOCK);
 }
 
-bool	get_priority(t_philo *philo)
-{
-	int			iter;
-	time_t		last_meal_time;
-	time_t		val;
-	t_program	*prog;
-
-	if (!philo || !philo->program)
-		return (false);
-	prog = philo->program;
-	iter = 0;
-	last_meal_time = philo->last_meal_time;
-	while (iter < prog->philo_count)
-	{
-		val = prog->philos->last_meal_time;
-		if (val < last_meal_time)
-			return (false);
-		iter++;
-	}
-	return (true);
-}
-
 int	get_number(int *target, pthread_mutex_t *mtx)
 {
 	int	value;
@@ -101,4 +79,21 @@ void	set_status(t_philo *philo, e_status status)
 	set_mutex(&philo->status_mtx, LOCK);
 	philo->status = status;
 	set_mutex(&philo->status_mtx, UNLOCK);
+}
+
+time_t	get_last_meal_time(t_philo *philo)
+{
+	time_t	val;
+
+	set_mutex(&philo->last_meal_time_mtx, LOCK);
+	val = philo->last_meal_time;
+	set_mutex(&philo->last_meal_time_mtx, UNLOCK);
+	return (val);
+}
+
+void	set_last_meal_time(t_philo *philo, time_t val)
+{
+	set_mutex(&philo->last_meal_time_mtx, LOCK);
+	philo->last_meal_time = val;
+	set_mutex(&philo->last_meal_time_mtx, UNLOCK);
 }
