@@ -60,5 +60,7 @@ bool	get_priority(t_philo *philo);
 bool	get_forks_available(t_philo *philo);
 void	set_status(t_philo *philo, e_status status);
 e_status	get_status(t_philo *philo);
+void	set_last_meal_time(t_philo *philo, time_t val);
+time_t	get_last_meal_time(t_philo *philo);
 
 #endif

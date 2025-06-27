@@ -61,27 +61,7 @@ void	set_number(int *target, int value, pthread_mutex_t *mtx)
 	set_mutex(mtx, UNLOCK);
 }
 
-e_status	get_status(t_philo *philo)
-{
-	e_status	val;
-	if (!philo)
-		return (DEAD);
-	set_mutex(&philo->status_mtx, LOCK);
-	val = philo->status;
-	set_mutex(&philo->status_mtx, UNLOCK);
-	return (val);
-}
-
-void	set_status(t_philo *philo, e_status status)
-{
-	if (!philo)
-		return ;
-	set_mutex(&philo->status_mtx, LOCK);
-	philo->status = status;
-	set_mutex(&philo->status_mtx, UNLOCK);
-}
-
-time_t	get_last_meal_time(t_philo *philo)
+time_t	get_lmt(t_philo *philo)
 {
 	time_t	val;
 
@@ -91,7 +71,7 @@ time_t	get_last_meal_time(t_philo *philo)
 	return (val);
 }
 
-void	set_last_meal_time(t_philo *philo, time_t val)
+void	set_lmt(t_philo *philo, time_t val)
 {
 	set_mutex(&philo->last_meal_time_mtx, LOCK);
 	philo->last_meal_time = val;

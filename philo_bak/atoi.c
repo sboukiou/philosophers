@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./deps.h"
+# include <limits.h>
 
 /**
 	* is_delim - Checks if a char is a delimiter or not
@@ -27,19 +27,26 @@ static int	is_delim(char c)
 	return (0);
 }
 
-int	valid_number(char digit, long num, int sign)
+static int	valid_number(char digit, long num, int sign)
 {
 	if (digit)
 		return (-1);
 	return (num * sign);
 }
 
+static int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
+
 /**
-	* _atoi - Converts a valid alphanumerical string into an integer literal
+	* ft_atoi - Converts a valid alphanumerical string into an integer literal
 	* @nptr: Alphanum string to convert
 	* Return: An int depending on the nptr
 */
-int	_atoi(const char *nptr)
+int	ft_atoi(const char *nptr)
 {
 	int		count;
 	int		sign;
@@ -57,9 +64,9 @@ int	_atoi(const char *nptr)
 	else if (nptr[count] == '+')
 		count++;
 	num = 0;
-	if (!_isdigit(nptr[count]))
+	if (!ft_isdigit(nptr[count]))
 		return (-1);
-	while (_isdigit(nptr[count]) && nptr[count])
+	while (ft_isdigit(nptr[count]) && nptr[count])
 	{
 		num = (num * 10) + nptr[count++] - '0';
 		if (num > INT_MAX)

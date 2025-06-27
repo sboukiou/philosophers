@@ -44,7 +44,10 @@ void	cleanup(t_program *program)
 {
 	if (!program)
 		return ;
-	destroy_program_locks(program);
+	if (destroy_program_locks(program) == FAIL)
+		printf("FAILED TO DESTROY ALL LOCKS\n");
+	else
+		printf("ALL LOCKS RELEASED CORRECTLY\n");
 	free(program->philos);
 	free(program->forks);
 	free(program);

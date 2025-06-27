@@ -55,7 +55,3 @@ int	usnooze(t_program *prog, int time)
 	return (SUCCESS);
 }
 
-time_t	get_time_of_last_meal(t_philo philo)
-{
-	return (philo.last_meal_time);
-}

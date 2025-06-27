@@ -3,7 +3,7 @@
 #  -g (Debug info)
 CC=cc
 RM=rm -f
-CFLAGS=-Wall -Werror -Wextra -pthread
+CFLAGS=-Wall -Werror -Wextra -pthread -g3 -fsanitize=thread
 NAME=philo
 TEST=test
 TEST_SRC=test.c
