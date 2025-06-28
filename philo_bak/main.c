@@ -16,8 +16,8 @@ int main(int ac, char **av)
 		return (0);
 	if (simulation(&prog) == EXIT_FAILURE)
 		return (0);
-	join_all_threads(&prog);
 	pthread_join(mthread, NULL);
+	join_all_threads(&prog);
 	free(prog.philos);
 	free(prog.forks);
 	return (0);

@@ -1,66 +1,62 @@
 # include "./philo.h"
 
+static void	eat(t_philo *philo)
+{
+	if (end(philo))
+		return ;
+	set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
+	write_status(BGREEN"is eating", philo->id, philo->prog);
+	ft_usleep(philo->prog, philo->prog->tte);
+	set_mutex(philo->left_fork, UNLOCK);
+	set_mutex(philo->right_fork, UNLOCK);
+}
+
+static void	snooze(t_philo *philo)
+{
+	if (end(philo))
+		return ;
+	write_status(BBLUE"is sleeping", philo->id, philo->prog);
+	ft_usleep(philo->prog, philo->prog->tts);
+}
+
+static void	think(t_philo *philo)
+{
+	if (end(philo))
+		return ;
+	write_status(UPURPLE"is thinking", philo->id, philo->prog);
+}
+
 static void *routine(void *arg)
 {
 	t_philo	*philo;
+	pthread_mutex_t	*first_fork;
+	pthread_mutex_t	*second_fork;
 
 	philo = (t_philo *)arg;
 	while (get_bool(&philo->prog->ready, &philo->prog->ready_mtx) == false)
 		;
-	while (true && get_bool(&philo->prog->end, &philo->prog->end_mtx) == false)
+	set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
+	while (true)
 	{
-		if (philo->id % 2 == 0)
+		if (end(philo))
+			return (NULL);
+		if (philo->prog->pc == 1)
 		{
-			usleep(200);
-			set_mutex(philo->left_fork, LOCK);
-			write_status(BYELLOW"has taken a fork", philo->id, philo->prog);
-			if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
-			{
-				set_mutex(philo->left_fork, UNLOCK);
-				return (NULL);
-			}
-			set_mutex(philo->right_fork, LOCK);
-			write_status(BYELLOW"has taken a fork", philo->id, philo->prog);
-			if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
-			{
-				set_mutex(philo->right_fork, UNLOCK);
-				return (NULL);
-			}
+			single_philo(philo);
+			return (NULL);
 		}
-		else
-		{
-			set_mutex(philo->right_fork, LOCK);
-			write_status(BYELLOW"has taken a fork", philo->id, philo->prog);
-			if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
-			{
-				set_mutex(philo->right_fork, UNLOCK);
-				return (NULL);
-			}
-			set_mutex(philo->left_fork, LOCK);
-			write_status(BYELLOW"has taken a fork", philo->id, philo->prog);
-			if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
-			{
-				set_mutex(philo->left_fork, UNLOCK);
-				return (NULL);
-			}
-		}
-		write_status(BGREEN"is eating", philo->id, philo->prog);
-		ft_usleep(philo->prog, philo->prog->tte);
-		if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
+		assign_forks(philo, &first_fork, &second_fork);
+		if (philo->id % 2)
+			usleep(300);
+		take_fork(first_fork, philo);
+		take_fork(second_fork, philo);
+		eat(philo);
+		if (end(philo))
 			return (NULL);
-		set_mutex(philo->left_fork, UNLOCK);
-		set_mutex(philo->right_fork, UNLOCK);
-		set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
-		philo->mc += 1;
-		if (philo->mc == philo->prog->mc)
+		snooze(philo);
+		if (end(philo))
 			return (NULL);
-		write_status(UPURPLE"is sleeping", philo->id, philo->prog);
-		ft_usleep(philo->prog, philo->prog->tts);
-		if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
-			return (NULL);
-		write_status(BBLUE"is thinking", philo->id, philo->prog);
-		if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
-			return (NULL);
+		think(philo);
 	}
 	return (NULL);
 }

@@ -85,4 +85,9 @@ int	init(t_prog *prog);
 int	simulation(t_prog *prog);
 int	ft_usleep(t_prog *prog, int time);
 void	*monitor(void *arg);
+/* Philo routine utils */
+void	single_philo(t_philo *philo);
+void	take_fork(pthread_mutex_t *fork, t_philo *philo);
+void	assign_forks(t_philo *philo, pthread_mutex_t **first_fork, pthread_mutex_t **second_fork);
+bool end(t_philo *philo);
 # endif /* PHILO_H */
