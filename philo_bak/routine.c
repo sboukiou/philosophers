@@ -1,6 +1,5 @@
 # include "./philo.h"
 
-
 static void *routine(void *arg)
 {
 	t_philo	*philo;
@@ -8,33 +7,60 @@ static void *routine(void *arg)
 	philo = (t_philo *)arg;
 	while (get_bool(&philo->prog->ready, &philo->prog->ready_mtx) == false)
 		;
-	while (true)
+	while (true && get_bool(&philo->prog->end, &philo->prog->end_mtx) == false)
 	{
 		if (philo->id % 2 == 0)
 		{
+			usleep(200);
 			set_mutex(philo->left_fork, LOCK);
 			write_status(BYELLOW"has taken a fork", philo->id, philo->prog);
+			if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
+			{
+				set_mutex(philo->left_fork, UNLOCK);
+				return (NULL);
+			}
 			set_mutex(philo->right_fork, LOCK);
 			write_status(BYELLOW"has taken a fork", philo->id, philo->prog);
+			if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
+			{
+				set_mutex(philo->right_fork, UNLOCK);
+				return (NULL);
+			}
 		}
 		else
 		{
 			set_mutex(philo->right_fork, LOCK);
 			write_status(BYELLOW"has taken a fork", philo->id, philo->prog);
+			if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
+			{
+				set_mutex(philo->right_fork, UNLOCK);
+				return (NULL);
+			}
 			set_mutex(philo->left_fork, LOCK);
 			write_status(BYELLOW"has taken a fork", philo->id, philo->prog);
+			if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
+			{
+				set_mutex(philo->left_fork, UNLOCK);
+				return (NULL);
+			}
 		}
 		write_status(BGREEN"is eating", philo->id, philo->prog);
 		ft_usleep(philo->prog, philo->prog->tte);
+		if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
+			return (NULL);
 		set_mutex(philo->left_fork, UNLOCK);
 		set_mutex(philo->right_fork, UNLOCK);
-		philo->lmt = get_current_time(philo->prog);
+		set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
 		philo->mc += 1;
 		if (philo->mc == philo->prog->mc)
 			return (NULL);
 		write_status(UPURPLE"is sleeping", philo->id, philo->prog);
 		ft_usleep(philo->prog, philo->prog->tts);
+		if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
+			return (NULL);
 		write_status(BBLUE"is thinking", philo->id, philo->prog);
+		if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
+			return (NULL);
 	}
 	return (NULL);
 }
