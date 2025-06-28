@@ -7,6 +7,7 @@
 # include <unistd.h> /* For write() ?? */
 # include <pthread.h> /* For pthread_create() and threads utils */
 # include <stdbool.h> /* For booleans */
+# include <sys/time.h> /* For gettimeofday() */
 
 #define RESET "\033[0m"
 #define BRED "\033[1;31m"
@@ -51,6 +52,9 @@ struct s_prog
 	bool			end;
 	pthread_mutex_t	end_mtx;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	write_mtx;
+	time_t			start;
+	pthread_mutex_t	start_mtx;
 };
 
 typedef	enum e_mtx
@@ -73,4 +77,10 @@ int	get_number(int *target, pthread_mutex_t *mtx);
 void	set_number(int *target, int value, pthread_mutex_t *mtx);
 time_t	get_lmt(t_philo *philo);
 void	set_lmt(t_philo *philo, time_t val);
+time_t	get_current_time(t_prog *prog);
+void	set_time(time_t *target, pthread_mutex_t *mtx, time_t val);
+time_t	get_time(time_t *target, pthread_mutex_t *mtx);
+int	write_status(const char *status, int id, t_prog *prog);
+int	init(t_prog *prog);
+int	simulation(t_prog *prog);
 # endif /* PHILO_H */

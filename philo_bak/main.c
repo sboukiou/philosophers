@@ -1,7 +1,6 @@
 # include "./philo.h"
 
-
-int	init(t_prog *prog);
+void join_all_threads(t_prog *prog);
 
 int main(int ac, char **av)
 {
@@ -11,32 +10,27 @@ int main(int ac, char **av)
 		return (0);
 	if (init(&prog) == EXIT_FAILURE)
 		return (0);
+	if (simulation(&prog) == EXIT_FAILURE)
+		return (0);
+	join_all_threads(&prog);
 	free(prog.philos);
 	free(prog.forks);
 	return (0);
 
 }
 
-static void *routine(void *arg)
-{
-	(void)arg;
-	return (NULL);
-}
 
-int	simulation(t_prog *prog)
+void	join_all_threads(t_prog *prog)
 {
 	int	i;
-	int	pthread_check;
 
 	if (!prog)
-		return (EXIT_FAILURE);
+		return ;
 	i = 0;
 	while (i < prog->pc)
 	{
-		pthread_check = pthread_create(&prog->philos[i].thread, NULL, routine, prog->philos + i);
-		if (pthread_check == FAIL)
-			return (EXIT_FAILURE);
+		if (pthread_join(prog->philos[i].thread, NULL) != EXIT_SUCCESS)
+			return ;
 		i++;
 	}
-	return (EXIT_SUCCESS);
 }

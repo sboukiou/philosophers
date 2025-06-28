@@ -65,3 +65,19 @@ void	set_lmt(t_philo *philo, time_t val)
 	philo->lmt = val;
 	set_mutex(&philo->lmt_mtx, UNLOCK);
 }
+
+time_t	get_time(time_t *target, pthread_mutex_t *mtx)
+{
+	time_t	val;
+	set_mutex(mtx, LOCK);
+	val = *target;
+	set_mutex(mtx, UNLOCK);
+	return (val);
+}
+
+void	set_time(time_t *target, pthread_mutex_t *mtx, time_t val)
+{
+	set_mutex(mtx, LOCK);
+	*target = val;
+	set_mutex(mtx, UNLOCK);
+}

@@ -43,5 +43,9 @@ int	init(t_prog *prog)
 		return (FAIL);
 	if (set_mutex(&prog->end_mtx, INIT) != SUCCESS)
 		return (FAIL);
+	if (set_mutex(&prog->write_mtx, INIT) != SUCCESS)
+		return (FAIL);
+	if (set_mutex(&prog->start_mtx, INIT) != SUCCESS)
+		return (FAIL);
 	return (EXIT_SUCCESS);
 }
