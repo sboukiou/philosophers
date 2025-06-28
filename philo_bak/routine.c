@@ -13,28 +13,28 @@ static void *routine(void *arg)
 		if (philo->id % 2 == 0)
 		{
 			set_mutex(philo->left_fork, LOCK);
-			write_status("has taken a fork", philo->id, philo->prog);
+			write_status(BYELLOW"has taken a fork", philo->id, philo->prog);
 			set_mutex(philo->right_fork, LOCK);
-			write_status("has taken a fork", philo->id, philo->prog);
+			write_status(BYELLOW"has taken a fork", philo->id, philo->prog);
 		}
 		else
 		{
 			set_mutex(philo->right_fork, LOCK);
-			write_status("has taken a fork", philo->id, philo->prog);
+			write_status(BYELLOW"has taken a fork", philo->id, philo->prog);
 			set_mutex(philo->left_fork, LOCK);
-			write_status("has taken a fork", philo->id, philo->prog);
+			write_status(BYELLOW"has taken a fork", philo->id, philo->prog);
 		}
-		write_status("is eating", philo->id, philo->prog);
-		usleep(philo->prog->tte * 1000);
+		write_status(BGREEN"is eating", philo->id, philo->prog);
+		ft_usleep(philo->prog, philo->prog->tte);
 		set_mutex(philo->left_fork, UNLOCK);
 		set_mutex(philo->right_fork, UNLOCK);
 		philo->lmt = get_current_time(philo->prog);
 		philo->mc += 1;
 		if (philo->mc == philo->prog->mc)
 			return (NULL);
-		write_status("is sleeping", philo->id, philo->prog);
-		usleep(philo->prog->tts * 1000);
-		write_status("is thinking", philo->id, philo->prog);
+		write_status(UPURPLE"is sleeping", philo->id, philo->prog);
+		ft_usleep(philo->prog, philo->prog->tts);
+		write_status(BBLUE"is thinking", philo->id, philo->prog);
 	}
 	return (NULL);
 }
