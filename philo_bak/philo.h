@@ -69,7 +69,7 @@ typedef	enum e_mtx
 int	ft_atoi(const char *nptr);
 int	tokenize(t_prog *prog, int ac, char **av);
 
-/* Utils funcs */
+/* Getters/Setters funcs --> gsetters.c */
 int	set_mutex(pthread_mutex_t *mutex, t_mtx action);
 bool	get_bool(bool *target, pthread_mutex_t *mtx);
 void	set_bool(bool *target, bool value, pthread_mutex_t *mtx);
@@ -77,17 +77,31 @@ int	get_number(int *target, pthread_mutex_t *mtx);
 void	set_number(int *target, int value, pthread_mutex_t *mtx);
 time_t	get_lmt(t_philo *philo);
 void	set_lmt(t_philo *philo, time_t val);
+
+
+/* Time functions --> time.c */
+int	ft_usleep(t_prog *prog, int time);
 time_t	get_current_time(t_prog *prog);
 void	set_time(time_t *target, pthread_mutex_t *mtx, time_t val);
 time_t	get_time(time_t *target, pthread_mutex_t *mtx);
-int	write_status(const char *status, int id, t_prog *prog);
+
+
+/* Init function --> init.c */
 int	init(t_prog *prog);
+
+/* Monitor and philo routines --> routine.c / monitor.c */
 int	simulation(t_prog *prog);
-int	ft_usleep(t_prog *prog, int time);
 void	*monitor(void *arg);
-/* Philo routine utils */
+
+/* Philo routine utils utils.c */
 void	single_philo(t_philo *philo);
 void	take_fork(pthread_mutex_t *fork, t_philo *philo);
 void	assign_forks(t_philo *philo, pthread_mutex_t **first_fork, pthread_mutex_t **second_fork);
 bool end(t_philo *philo);
+
+/* Philo actions --> actions.c */
+int	write_status(const char *status, t_philo *philo);
+void	eat(t_philo *philo);
+void	think(t_philo *philo);
+void	snooze(t_philo *philo);
 # endif /* PHILO_H */

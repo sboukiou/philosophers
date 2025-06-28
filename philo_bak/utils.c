@@ -1,68 +1,44 @@
-#include "./philo.h"
+# include "./philo.h"
 
-int	set_mutex(pthread_mutex_t *mutex, t_mtx action)
+void	take_fork(pthread_mutex_t *fork, t_philo *philo)
 {
-	if (action == INIT)
-		return (pthread_mutex_init(mutex, NULL));
-	if (action == LOCK)
-		return (pthread_mutex_lock(mutex));
-	if (action == UNLOCK)
-		return (pthread_mutex_unlock(mutex));
-	if (action == DESTROY)
-		return (pthread_mutex_destroy(mutex));
-	return (FAIL);
+	set_mutex(fork, LOCK);
+	if (end(philo))
+	{
+		set_mutex(fork, UNLOCK);
+		return ;
+	}
+	write_status(BYELLOW"has taken a fork", philo);
 }
 
-bool	get_bool(bool *target, pthread_mutex_t *mtx)
+void	assign_forks(t_philo *philo, pthread_mutex_t **first_fork, pthread_mutex_t **second_fork)
 {
-	bool	value;
-
-	set_mutex(mtx, LOCK);
-	value = *target;
-	set_mutex(mtx, UNLOCK);
-	return (value);
+		if (philo->id % 2 == 0)
+		{
+			*first_fork = philo->left_fork;
+			*second_fork = philo->right_fork;
+		}
+		else
+		{
+			*first_fork = philo->right_fork;
+			*second_fork = philo->left_fork;
+		}
 }
 
-void	set_bool(bool *target, bool value, pthread_mutex_t *mtx)
+void	single_philo(t_philo *philo)
 {
-	set_mutex(mtx, LOCK);
-	*target = value;
-	set_mutex(mtx, UNLOCK);
+			set_mutex(philo->left_fork, LOCK);
+			write_status(BYELLOW"has taken a fork", philo);
+			set_mutex(philo->left_fork, UNLOCK);
+			while (get_bool(&philo->prog->end, &philo->prog->end_mtx) == false)
+				;
 }
 
-int	get_number(int *target, pthread_mutex_t *mtx)
+bool end(t_philo *philo)
 {
-	int	value;
-
-	if (!target)
-		return (-1);
-	set_mutex(mtx, LOCK);
-	value = *target;
-	set_mutex(mtx, UNLOCK);
-	return (value);
+	if (!philo)
+		return (true);
+	if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
+		return (true);
+	return (false);
 }
-
-void	set_number(int *target, int value, pthread_mutex_t *mtx)
-{
-	set_mutex(mtx, LOCK);
-	*target = value;
-	set_mutex(mtx, UNLOCK);
-}
-
-time_t	get_lmt(t_philo *philo)
-{
-	time_t	val;
-
-	set_mutex(&philo->lmt_mtx, LOCK);
-	val = philo->lmt;
-	set_mutex(&philo->lmt_mtx, UNLOCK);
-	return (val);
-}
-
-void	set_lmt(t_philo *philo, time_t val)
-{
-	set_mutex(&philo->lmt_mtx, LOCK);
-	philo->lmt = val;
-	set_mutex(&philo->lmt_mtx, UNLOCK);
-}
-

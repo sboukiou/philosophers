@@ -1,31 +1,5 @@
 # include "./philo.h"
 
-static void	eat(t_philo *philo)
-{
-	if (end(philo))
-		return ;
-	set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
-	write_status(BGREEN"is eating", philo->id, philo->prog);
-	ft_usleep(philo->prog, philo->prog->tte);
-	set_mutex(philo->left_fork, UNLOCK);
-	set_mutex(philo->right_fork, UNLOCK);
-}
-
-static void	snooze(t_philo *philo)
-{
-	if (end(philo))
-		return ;
-	write_status(BBLUE"is sleeping", philo->id, philo->prog);
-	ft_usleep(philo->prog, philo->prog->tts);
-}
-
-static void	think(t_philo *philo)
-{
-	if (end(philo))
-		return ;
-	write_status(UPURPLE"is thinking", philo->id, philo->prog);
-}
-
 static void *routine(void *arg)
 {
 	t_philo	*philo;
@@ -51,11 +25,7 @@ static void *routine(void *arg)
 		take_fork(first_fork, philo);
 		take_fork(second_fork, philo);
 		eat(philo);
-		if (end(philo))
-			return (NULL);
 		snooze(philo);
-		if (end(philo))
-			return (NULL);
 		think(philo);
 	}
 	return (NULL);
