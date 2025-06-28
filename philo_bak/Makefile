@@ -3,7 +3,7 @@ CC=cc
 FLAGS=-Wall -Werror -Wextra -g3 -fsanitize=thread -pthread
 RM=rm -f
 
-SOURCES=tokenize.c atoi.c main.c utils.c init.c write.c routine.c time.c
+SOURCES=tokenize.c atoi.c main.c utils.c init.c write.c routine.c time.c monitor.c
 OBJS=$(SOURCES:%.c=%.o)
 
 %.o: %.c
