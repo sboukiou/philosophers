@@ -83,4 +83,5 @@ time_t	get_time(time_t *target, pthread_mutex_t *mtx);
 int	write_status(const char *status, int id, t_prog *prog);
 int	init(t_prog *prog);
 int	simulation(t_prog *prog);
+int	ft_usleep(t_prog *prog, int time);
 # endif /* PHILO_H */
