@@ -1,35 +1,22 @@
-# NOTE: to use with valgrind --> valgrind --tool=helgrind [Program_name] [arguments]
-# -fsanitize=thread
-#  -g (Debug info)
-CC=cc
-RM=rm -f
-CFLAGS=-Wall -Werror -Wextra -pthread -g3 -fsanitize=thread
 NAME=philo
-TEST=test
-TEST_SRC=test.c
+CC=cc
+FLAGS=-Wall -Werror -Wextra
+RM=rm -f
 
-SOURCES=main.c parser.c time.c cleanup.c init.c philos.c getters_setters.c monitor.c actions.c dinner.c
+SOURCES=tokenize.c atoi.c main.c utils.c init.c actions.c routine.c time.c monitor.c gsetters.c
 OBJS=$(SOURCES:%.c=%.o)
 
-DEPS_SOURCES=./Deps/atoi.c ./Deps/isdigit.c ./Deps/strlen.c ./Deps/write.c
-DEPS_OBJS=$(DEPS_SOURCES:%.c=%.o)
+%.o: %.c
+	$(CC) $(FLAGS) -c $< -o $@
 
-OBJS_ALL=$(OBJS) $(DEPS_OBJS)
+$(NAME): $(OBJS)
+	$(CC) $(FLAGS) -o $(NAME) $(OBJS)
 
 all: $(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(NAME): $(OBJS_ALL)
-	$(CC) -o $(NAME) $(CFLAGS) $(OBJS_ALL)
-
 clean:
-	$(RM) $(OBJS_ALL)
-
+	$(RM) $(OBJS)
 fclean: clean
 	$(RM) $(NAME)
-re: fclean all
 
-$(TEST): $(TEST_SRC)
-	$(CC) $(CFLAGS) $(TEST_SRC) -o $(TEST)
+re: fclean all

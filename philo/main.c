@@ -3,47 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
+/*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 18:21:48 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/05/05 13:49:47 by sboukiou         ###   ########.fr       */
+/*   Created: 2025/06/28 08:49:03 by sboukiou          #+#    #+#             */
+/*   Updated: 2025/06/28 08:49:20 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
-#include "./Deps/deps.h"
 
-static int	join_all_threads(t_program *prog)
+void	join_all_threads(t_prog *prog);
+
+int	main(int ac, char **av)
 {
-	int	count;
+	t_prog		prog;
+	pthread_t	mthread;
 
-	if (!prog)
-		return (FAIL);
-	count = 0;
-	while (count < prog->philo_count)
-	{
-		if (pthread_join(prog->philos[count].thread_id, NULL) != SUCCESS)
-			return (print_info(prog, "Failed to join the thread"), FAIL);
-		count++;
-	}
-	if (pthread_join(prog->monitor, NULL) != SUCCESS)
-		return (FAIL);
-	return (SUCCESS);
+	if (tokenize(&prog, ac, av) == EXIT_FAILURE)
+		return (0);
+	if (init(&prog) == EXIT_FAILURE)
+		return (0);
+	if (pthread_create(&mthread, NULL, monitor, &prog) != EXIT_SUCCESS)
+		return (0);
+	if (simulation(&prog) == EXIT_FAILURE)
+		return (0);
+	pthread_join(mthread, NULL);
+	join_all_threads(&prog);
+	free(prog.philos);
+	free(prog.forks);
+	return (0);
 }
 
-int main(int ac, char **av)
+void	join_all_threads(t_prog *prog)
 {
-	t_program	*program;
+	int	i;
 
-	program = parser(ac, av);
-	if (program == NULL)
-		return (FAIL);
-	if (init(program) != SUCCESS)
-		return (FAIL);
-	if (start_dinner(program) != SUCCESS)
-		return (FAIL);
-	if (join_all_threads(program) != SUCCESS)
-		return (FAIL);
-	cleanup(program);
-	return (SUCCESS);
+	if (!prog)
+		return ;
+	i = 0;
+	while (i < prog->pc)
+	{
+		if (pthread_join(prog->philos[i].thread, NULL) != EXIT_SUCCESS)
+			return ;
+		i++;
+	}
 }

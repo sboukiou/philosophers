@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   getters_setters.c                                  :+:      :+:    :+:   */
+/*   gsetters.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
+/*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 20:10:36 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/04/25 15:47:37 by sboukiou         ###   ########.fr       */
+/*   Created: 2025/06/28 08:45:26 by sboukiou          #+#    #+#             */
+/*   Updated: 2025/06/28 08:46:32 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,4 @@ void	set_number(int *target, int value, pthread_mutex_t *mtx)
 	set_mutex(mtx, LOCK);
 	*target = value;
 	set_mutex(mtx, UNLOCK);
-}
-
-time_t	get_lmt(t_philo *philo)
-{
-	time_t	val;
-
-	set_mutex(&philo->last_meal_time_mtx, LOCK);
-	val = philo->last_meal_time;
-	set_mutex(&philo->last_meal_time_mtx, UNLOCK);
-	return (val);
-}
-
-void	set_lmt(t_philo *philo, time_t val)
-{
-	set_mutex(&philo->last_meal_time_mtx, LOCK);
-	philo->last_meal_time = val;
-	set_mutex(&philo->last_meal_time_mtx, UNLOCK);
 }

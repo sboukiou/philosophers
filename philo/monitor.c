@@ -3,84 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sboukiou <your@mail.com>                   +#+  +:+       +#+        */
+/*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/21 16:19:27 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/05/05 12:34:22 by sboukiou         ###   ########.fr       */
+/*   Created: 2025/06/28 08:49:27 by sboukiou          #+#    #+#             */
+/*   Updated: 2025/06/28 08:49:32 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
-/**/
-void	monitor(t_program *prog)
-{
-	int	thread_check;
 
-	if (!prog)
-		return ;
-	thread_check = pthread_create(&prog->monitor, NULL, monitor_routine, prog);
-	if (thread_check != SUCCESS)
-	{
-		print_error(prog, "Failed to create the monitor thread");
-		return ;
-	}
-}
-
-static bool	is_dead(t_philo *philo)
+static bool	dead(t_philo *philo)
 {
-	time_t	current_time;
-	time_t	last_meal_time;
-	e_status	status;
+	time_t	now;
 
 	if (!philo)
 		return (true);
-	current_time = get_current_time(philo->program);
-	last_meal_time = get_last_meal_time(philo);
-
-	status = get_status(philo);
-	if (current_time - last_meal_time > philo->program->time_to_die && status != EATING)
+	now = get_current_time(philo->prog);
+	if (now - get_time(&philo->lmt, &philo->lmt_mtx) > philo->prog->ttd)
 		return (true);
 	return (false);
 }
 
-static bool	all_philos_are_full(t_program *prog)
+void	*monitor(void *arg)
 {
-	int	i;
-
-	i = 0;
-	while (i < prog->philo_count)
-	{
-		if (philo_finished(prog->philos + i) == false)
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
-void	*monitor_routine(void *arg)
-{
-	t_program	*prog;
+	t_prog	*prog;
 	int		i;
 
-	if (arg == NULL)
+	if (!arg)
 		return (NULL);
-	prog = (t_program *)arg;
-	while (get_bool(&prog->end_of_simu, &prog->end_of_simu_mtx) == false)
+	prog = (t_prog *)arg;
+	while (get_bool(&prog->ready, &prog->ready_mtx) == false)
+		;
+	while (true)
 	{
-		usnooze(prog, 1);
 		i = 0;
-		while (i < prog->philo_count && !get_bool(&prog->end_of_simu, &prog->end_of_simu_mtx))
+		while (i < prog->pc)
 		{
-			if (is_dead(&prog->philos[i]) == true && philo_finished(&prog->philos[i]) == false)
+			if (dead(prog->philos + i) == true)
 			{
-				died(&prog->philos[i]);
+				write_status(BRED"died", prog->philos + i);
+				set_bool(&prog->end, true, &prog->end_mtx);
 				return (NULL);
 			}
 			i++;
 		}
-		if (all_philos_are_full(prog) == true)
-			return (NULL);
 	}
-	set_bool(&prog->end_of_simu, true, &prog->end_of_simu_mtx);
 	return (NULL);
 }
