@@ -39,6 +39,8 @@ int	init(t_prog *prog)
 			return (FAIL);
 		count++;
 	}
+	prog->end = false;
+	prog->ready = false;
 	if (set_mutex(&prog->ready_mtx, INIT) != SUCCESS)
 		return (FAIL);
 	if (set_mutex(&prog->end_mtx, INIT) != SUCCESS)
