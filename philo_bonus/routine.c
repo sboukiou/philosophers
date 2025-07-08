@@ -65,6 +65,7 @@ int	create_processes(t_prog *prog)
 	prog->start = get_current_time(prog);
 	while (i < prog->pc)
 	{
+		printf("Creating processes\n");
 		temp_pid = fork();
 		if (temp_pid == FAIL)
 			return (FAIL);

@@ -34,10 +34,11 @@ int	main(int ac, char **av)
 	t_prog		prog;
 	int			status;
 
+
 	if (tokenize(&prog, ac, av) == EXIT_FAILURE)
-		return (0);
+		return (printf("[Failed to tokenize input]\n"), EXIT_FAILURE);
 	if (init(&prog) == EXIT_FAILURE)
-		return (0);
+		return (printf("[Failed to init program data]\n"), EXIT_FAILURE);
 	create_processes(&prog);
 	waitpid(-1, &status, 0);
 	if (WEXITSTATUS(status) == DEAD)
@@ -48,6 +49,7 @@ int	main(int ac, char **av)
 	else if (WEXITSTATUS(status) == FULL)
 		while (waitpid(-1, &status, 0) > 0);
 	close_semaphores(&prog);
+	printf("leaving\n");
 	return (0);
 }
 

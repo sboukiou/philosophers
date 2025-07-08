@@ -6,7 +6,7 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:46:36 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/06/28 08:48:32 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:43:18 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static int	init_prog_attributes(t_prog *prog)
 	if (prog->write_sem == SEM_FAILED)
 		return (FAIL);
 	sem_unlink(MONITOR_START_SEM);
-	prog->monitor_start_sem = sem_open(MONITOR_START_SEM, O_CREAT | O_EXCL, 0644, 0);
+	prog->monitor_start_sem = sem_open(MONITOR_START_SEM,
+			O_CREAT | O_EXCL, 0644, 0);
 	if (prog->monitor_start_sem == SEM_FAILED)
 		return (FAIL);
 	sem_unlink(GLOB_END_SEM);
@@ -54,7 +55,9 @@ static int	init_memory(t_prog *prog)
 	return (EXIT_SUCCESS);
 }
 
-
+/**
+ * init - Initializes program data and philosophers
+ */
 int	init(t_prog *prog)
 {
 	int		count;

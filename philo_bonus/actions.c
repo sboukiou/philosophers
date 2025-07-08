@@ -6,17 +6,15 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:45:04 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/06/28 08:45:11 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:40:20 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
-
 bool	ended(t_philo *philo)
 {
 	time_t	now;
-
 
 	now = get_current_time(philo->prog);
 	if (now - philo->lmt > philo->prog->ttd)
@@ -44,7 +42,7 @@ void	eat(t_philo *philo)
 	take_fork(philo);
 	take_fork(philo);
 	write_status(BGREEN"is eating", philo);
-	philo->lmt =  get_current_time(philo->prog);
+	philo->lmt = get_current_time(philo->prog);
 	ft_usleep(philo->prog, philo->prog->tte);
 	sem_post(philo->forks);
 	sem_post(philo->forks);

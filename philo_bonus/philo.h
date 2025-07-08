@@ -6,7 +6,7 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:43:41 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/06/28 08:54:45 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:40:04 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@
 
 typedef struct s_prog	t_prog;
 
+/**
+ * s_philo - philosopher representation
+ * as a type.
+ * holds metadata of philosophers
+ */
 typedef struct s_philo
 {
 	int				pc;
@@ -62,6 +67,9 @@ typedef struct s_philo
 
 /**
  * struct holding all our program data
+ * timings: time_to_die - time_to_eat - time_to_sleep
+ * philosophers structure ->philos
+ * semaphoers
  */
 struct s_prog
 {
@@ -83,7 +91,6 @@ struct s_prog
 	pthread_t		mthread;
 };
 
-
 /* Desp + Tokenization */
 int		ft_atoi(const char *nptr);
 int		tokenize(t_prog *prog, int ac, char **av);
@@ -97,7 +104,7 @@ int		init(t_prog *prog);
 
 /* Monitor and philo routines --> routine.c / monitor.c */
 void	*monitor(void *arg);
-int	create_processes(t_prog *prog);
+int		create_processes(t_prog *prog);
 
 /* Philo routine utils utils.c */
 void	single_philo(t_philo *philo);
