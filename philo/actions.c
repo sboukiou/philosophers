@@ -35,6 +35,9 @@ void	eat(t_philo *philo)
 	set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
 	write_status(BGREEN"is eating", philo);
 	ft_usleep(philo->prog, philo->prog->tte);
+	set_number(&philo->mc, get_number(&philo->mc, &philo->mc_mtx) + 1,
+		&philo->mc_mtx);
+	/* printf("philo->mc --> [%d]\n", philo->mc); */
 	set_mutex(philo->left_fork, UNLOCK);
 	set_mutex(philo->right_fork, UNLOCK);
 }

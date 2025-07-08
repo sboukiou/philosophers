@@ -12,6 +12,13 @@
 
 #include "./philo.h"
 
+static bool	philo_full(t_philo *philo)
+{
+	if (philo->mc == philo->prog->mc)
+		return (true);
+	return (false);
+}
+
 static bool	dead(t_philo *philo)
 {
 	time_t	now;
@@ -28,6 +35,7 @@ void	*monitor(void *arg)
 {
 	t_prog	*prog;
 	int		i;
+	int		full_philos;
 
 	if (!arg)
 		return (NULL);
@@ -37,6 +45,8 @@ void	*monitor(void *arg)
 	while (true)
 	{
 		i = 0;
+		usleep(1000);
+		full_philos = 0;
 		while (i < prog->pc)
 		{
 			if (dead(prog->philos + i) == true)
@@ -45,6 +55,10 @@ void	*monitor(void *arg)
 				set_bool(&prog->end, true, &prog->end_mtx);
 				return (NULL);
 			}
+			if (philo_full(prog->philos + i) == true)
+				full_philos += 1;
+			if (full_philos == prog->pc)
+				return (NULL);
 			i++;
 		}
 	}

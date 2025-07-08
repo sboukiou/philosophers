@@ -34,6 +34,8 @@ static void	*routine(void *arg)
 		take_fork(first_fork, philo);
 		take_fork(second_fork, philo);
 		eat(philo);
+		if (philo->mc == philo->prog->mc)
+			return (NULL);
 		snooze(philo);
 		think(philo);
 	}
