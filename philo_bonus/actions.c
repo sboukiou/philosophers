@@ -16,7 +16,7 @@ bool	ended(t_philo *philo)
 {
 	time_t	now;
 
-	now = get_current_time(philo->prog);
+	now = get_current_time();
 	if (now - philo->lmt > philo->prog->ttd)
 	{
 		write_status(BRED"died", philo);
@@ -25,16 +25,11 @@ bool	ended(t_philo *philo)
 	return (false);
 }
 
-int	write_status(const char *status, t_philo *philo)
+void	take_fork(t_philo *philo)
 {
-	time_t	now;
-
-	now = get_current_time(philo->prog);
-	sem_wait(philo->prog->write_sem);
-	printf("[%8lu] %d %s\n"RESET, now, philo->id, status);
-	if (strcmp(status, BRED"died") != 0)
-		sem_post(philo->prog->write_sem);
-	return (0);
+	sem_wait(philo->forks);
+	ended(philo);
+	write_status(BYELLOW"has taken a fork", philo);
 }
 
 void	eat(t_philo *philo)
@@ -42,8 +37,8 @@ void	eat(t_philo *philo)
 	take_fork(philo);
 	take_fork(philo);
 	write_status(BGREEN"is eating", philo);
-	philo->lmt = get_current_time(philo->prog);
-	ft_usleep(philo->prog, philo->prog->tte);
+	philo->lmt = get_current_time();
+	ft_usleep(philo->prog->tte);
 	sem_post(philo->forks);
 	sem_post(philo->forks);
 	philo->mc += 1;
@@ -55,12 +50,12 @@ void	snooze(t_philo *philo)
 {
 	ended(philo);
 	write_status(BBLUE"is sleeping", philo);
-	ft_usleep(philo->prog, philo->prog->tts);
+	ft_usleep(philo->prog->tts);
 }
 
 void	think(t_philo *philo)
 {
 	ended(philo);
 	write_status(UPURPLE"is thinking", philo);
-	ft_usleep(philo->prog, 1);
+	ft_usleep(1);
 }

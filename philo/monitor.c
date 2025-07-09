@@ -51,7 +51,7 @@ void	*monitor(void *arg)
 		{
 			if (dead(prog->philos + i) == true)
 			{
-				write_status(BRED"died", prog->philos + i);
+				write_status("died", prog->philos + i);
 				set_bool(&prog->end, true, &prog->end_mtx);
 				return (NULL);
 			}

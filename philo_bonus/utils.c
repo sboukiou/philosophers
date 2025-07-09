@@ -13,19 +13,25 @@
 #include "./philo.h"
 #include "deps.h"
 
-void	take_fork(t_philo *philo)
-{
-	sem_wait(philo->forks);
-	ended(philo);
-	write_status(BYELLOW"has taken a fork", philo);
-}
 
 void	single_philo(t_philo *philo)
 {
 	sem_wait(philo->forks);
 	write_status(BYELLOW"has taken a fork", philo);
-	ft_usleep(philo->prog, philo->prog->ttd);
+	ft_usleep(philo->prog->ttd);
 	write_status(BRED"died", philo);
 
 	exit(DEAD);
+}
+
+int	write_status(const char *status, t_philo *philo)
+{
+	time_t	now;
+
+	now = get_current_time();
+	sem_wait(philo->prog->write_sem);
+	printf("[%8lu] %d %s\n"RESET, now - philo->prog->start, philo->id, status);
+	if (strcmp(status, BRED"died") != 0)
+		sem_post(philo->prog->write_sem);
+	return (0);
 }

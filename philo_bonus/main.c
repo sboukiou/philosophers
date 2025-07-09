@@ -49,7 +49,6 @@ int	main(int ac, char **av)
 	else if (WEXITSTATUS(status) == FULL)
 		while (waitpid(-1, &status, 0) > 0);
 	close_semaphores(&prog);
-	printf("leaving\n");
 	return (0);
 }
 

@@ -12,16 +12,6 @@
 
 #include "./philo.h"
 
-void	take_fork(pthread_mutex_t *fork, t_philo *philo)
-{
-	set_mutex(fork, LOCK);
-	if (end(philo))
-	{
-		set_mutex(fork, UNLOCK);
-		return ;
-	}
-	write_status(BYELLOW"has taken a fork", philo);
-}
 
 void	assign_forks(t_philo *philo, pthread_mutex_t **first_fork,
 		pthread_mutex_t **second_fork)

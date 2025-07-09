@@ -35,7 +35,7 @@
 
 # define FAIL -1
 # define SUCCESS 0
-# define FULL 0
+# define FULL 13
 # define DEAD 127
 
 # define FORK_SEM "/fork_sem"
@@ -96,8 +96,8 @@ int		ft_atoi(const char *nptr);
 int		tokenize(t_prog *prog, int ac, char **av);
 
 /* Time functions --> time.c */
-int		ft_usleep(t_prog *prog, int time);
-time_t	get_current_time(t_prog *prog);
+int		ft_usleep(int time);
+time_t	get_current_time(void);
 
 /* Init function --> init.c */
 int		init(t_prog *prog);

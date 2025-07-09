@@ -23,32 +23,42 @@ int	write_status(const char *status, t_philo *philo)
 		set_mutex(&philo->prog->write_mtx, UNLOCK);
 		return (0);
 	}
-	printf("[%8lu] %d %s\n"RESET, now, philo->id, status);
+	printf("[%8lu] %d %s\n", now, philo->id, status);
 	set_mutex(&philo->prog->write_mtx, UNLOCK);
 	return (0);
+}
+
+void	take_fork(pthread_mutex_t *fork, t_philo *philo)
+{
+	set_mutex(fork, LOCK);
+	if (end(philo))
+	{
+		set_mutex(fork, UNLOCK);
+		return ;
+	}
+	write_status("has taken a fork", philo);
 }
 
 void	eat(t_philo *philo)
 {
 	if (end(philo))
 		return ;
-	set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
-	write_status(BGREEN"is eating", philo);
+	write_status("is eating", philo);
 	ft_usleep(philo->prog, philo->prog->tte);
+	set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
 	set_number(&philo->mc, get_number(&philo->mc, &philo->mc_mtx) + 1,
 		&philo->mc_mtx);
-	/* printf("philo->mc --> [%d]\n", philo->mc); */
 	set_mutex(philo->left_fork, UNLOCK);
 	set_mutex(philo->right_fork, UNLOCK);
 }
 
 void	snooze(t_philo *philo)
 {
-	write_status(BBLUE"is sleeping", philo);
+	write_status("is sleeping", philo);
 	ft_usleep(philo->prog, philo->prog->tts);
 }
 
 void	think(t_philo *philo)
 {
-	write_status(UPURPLE"is thinking", philo);
+	write_status("is thinking", philo);
 }

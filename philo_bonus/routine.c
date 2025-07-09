@@ -37,7 +37,9 @@ int	philo_routine(t_philo *philo)
 	if (!philo)
 		return (FAIL);
 	reopn_semaphores(philo);
-	sem_wait(philo->prog->ready_sem);
+	while (get_current_time() < philo->prog->start)
+		;
+	philo->lmt = get_current_time();
 	if (philo->prog->pc == 1)
 		single_philo(philo);
 	if (philo->id % 2)
@@ -61,18 +63,16 @@ int	create_processes(t_prog *prog)
 	if (!prog)
 		return (FAIL);
 	i  = 0;
-	prog->start = 0;
-	prog->start = get_current_time(prog);
+	prog->start = get_current_time() + 30;
 	while (i < prog->pc)
 	{
-		printf("Creating processes\n");
 		temp_pid = fork();
 		if (temp_pid == FAIL)
 			return (FAIL);
 		if (temp_pid == 0)
 		{
 			philo_routine(prog->philos + i);
-			exit(SUCCESS);
+			exit(FAIL);
 		}
 		prog->philos[i].pid = temp_pid;
 		i++;
