@@ -109,7 +109,7 @@ bool	end(t_philo *philo);
 
 /* Philo actions --> actions.c */
 int		write_status(const char *status, t_philo *philo);
-void	eat(t_philo *philo);
+int		eat(t_philo *philo);
 void	think(t_philo *philo);
 void	snooze(t_philo *philo);
 #endif /* PHILO_H */

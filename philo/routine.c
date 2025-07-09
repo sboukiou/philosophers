@@ -33,8 +33,7 @@ static void	*routine(void *arg)
 			usleep(300);
 		take_fork(first_fork, philo);
 		take_fork(second_fork, philo);
-		eat(philo);
-		if (philo->mc == philo->prog->mc)
+		if (eat(philo))
 			return (NULL);
 		snooze(philo);
 		think(philo);

@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "./philo.h"
-#include "deps.h"
-
 
 void	single_philo(t_philo *philo)
 {
@@ -20,7 +18,6 @@ void	single_philo(t_philo *philo)
 	write_status(BYELLOW"has taken a fork", philo);
 	ft_usleep(philo->prog->ttd);
 	write_status(BRED"died", philo);
-
 	exit(DEAD);
 }
 

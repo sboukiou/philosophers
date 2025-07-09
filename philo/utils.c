@@ -12,7 +12,6 @@
 
 #include "./philo.h"
 
-
 void	assign_forks(t_philo *philo, pthread_mutex_t **first_fork,
 		pthread_mutex_t **second_fork)
 {

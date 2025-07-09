@@ -13,8 +13,7 @@
 #include "./philo.h"
 #include "deps.h"
 
-
-static int	close_semaphores(t_prog  *prog)
+static int	close_semaphores(t_prog *prog)
 {
 	if (sem_close(prog->ready_sem) == FAIL)
 		return (FAIL);
@@ -33,7 +32,7 @@ int	main(int ac, char **av)
 {
 	t_prog		prog;
 	int			status;
-
+	int			i;
 
 	if (tokenize(&prog, ac, av) == EXIT_FAILURE)
 		return (printf("[Failed to tokenize input]\n"), EXIT_FAILURE);
@@ -43,12 +42,13 @@ int	main(int ac, char **av)
 	waitpid(-1, &status, 0);
 	if (WEXITSTATUS(status) == DEAD)
 	{
-		for (int i = 0; i < prog.pc; i++)
-			kill(prog.philos[i].pid, SIGKILL);
+		i = 0;
+		while (i < prog.pc)
+			kill(prog.philos[i++].pid, SIGKILL);
 	}
 	else if (WEXITSTATUS(status) == FULL)
-		while (waitpid(-1, &status, 0) > 0);
+		while (waitpid(-1, &status, 0) > 0)
+			;
 	close_semaphores(&prog);
 	return (0);
 }
-

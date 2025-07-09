@@ -27,7 +27,11 @@ static bool	dead(t_philo *philo)
 		return (true);
 	now = get_current_time(philo->prog);
 	if (now - get_time(&philo->lmt, &philo->lmt_mtx) > philo->prog->ttd)
+	{
+		write_status("died", philo);
+		set_bool(&philo->prog->end, true, &philo->prog->end_mtx);
 		return (true);
+	}
 	return (false);
 }
 
@@ -44,22 +48,17 @@ void	*monitor(void *arg)
 		;
 	while (true)
 	{
-		i = 0;
+		i = -1;
 		usleep(1000);
 		full_philos = 0;
-		while (i < prog->pc)
+		while (++i < prog->pc)
 		{
 			if (dead(prog->philos + i) == true)
-			{
-				write_status("died", prog->philos + i);
-				set_bool(&prog->end, true, &prog->end_mtx);
 				return (NULL);
-			}
 			if (philo_full(prog->philos + i) == true)
 				full_philos += 1;
 			if (full_philos == prog->pc)
 				return (NULL);
-			i++;
 		}
 	}
 	return (NULL);

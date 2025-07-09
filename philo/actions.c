@@ -39,10 +39,10 @@ void	take_fork(pthread_mutex_t *fork, t_philo *philo)
 	write_status("has taken a fork", philo);
 }
 
-void	eat(t_philo *philo)
+int	eat(t_philo *philo)
 {
 	if (end(philo))
-		return ;
+		return (1);
 	write_status("is eating", philo);
 	ft_usleep(philo->prog, philo->prog->tte);
 	set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
@@ -50,6 +50,9 @@ void	eat(t_philo *philo)
 		&philo->mc_mtx);
 	set_mutex(philo->left_fork, UNLOCK);
 	set_mutex(philo->right_fork, UNLOCK);
+	if (philo->mc == philo->prog->mc)
+		return (1);
+	return (0);
 }
 
 void	snooze(t_philo *philo)

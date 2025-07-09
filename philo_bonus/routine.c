@@ -54,7 +54,6 @@ int	philo_routine(t_philo *philo)
 	return (SUCCESS);
 }
 
-
 int	create_processes(t_prog *prog)
 {
 	int		i;
@@ -62,7 +61,7 @@ int	create_processes(t_prog *prog)
 
 	if (!prog)
 		return (FAIL);
-	i  = 0;
+	i = 0;
 	prog->start = get_current_time() + 30;
 	while (i < prog->pc)
 	{
@@ -77,7 +76,7 @@ int	create_processes(t_prog *prog)
 		prog->philos[i].pid = temp_pid;
 		i++;
 	}
-	i  = 0;
+	i = 0;
 	while (i++ < prog->pc)
 		sem_post(prog->ready_sem);
 	return (SUCCESS);

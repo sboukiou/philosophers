@@ -30,7 +30,6 @@ static int	check_input(t_prog *prog, int ac)
 
 int	tokenize(t_prog *prog, int ac, char **av)
 {
-
 	if (check_input(prog, ac) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (ft_atoi(av[1]) < 1 || ft_atoi(av[2]) < 1
