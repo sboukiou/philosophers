@@ -1,6 +1,6 @@
 NAME=philo
 CC=cc
-FLAGS=-Wall -Werror -Wextra
+FLAGS=-Wall -Werror -Wextra -fsanitize=thread
 RM=rm -f
 
 SOURCES=tokenize.c atoi.c main.c utils.c init.c actions.c routine.c time.c monitor.c gsetters.c

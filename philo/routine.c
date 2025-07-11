@@ -6,11 +6,20 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:49:38 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/06/28 08:50:59 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:36:16 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
+
+void	start_ritual(t_philo *philo)
+{
+	while (get_bool(&philo->prog->ready, &philo->prog->ready_mtx) == false)
+		;
+	if (philo->id % 2 == 0)
+		usleep(300);
+	set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
+}
 
 static void	*routine(void *arg)
 {
@@ -19,13 +28,11 @@ static void	*routine(void *arg)
 	pthread_mutex_t	*second_fork;
 
 	philo = (t_philo *)arg;
-	while (get_bool(&philo->prog->ready, &philo->prog->ready_mtx) == false)
-		;
-	if (philo->id % 2 == 0)
-		usleep(300);
-	set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
+	start_ritual(philo);
 	while (true)
 	{
+		if (philo->id % 2 != 0)
+			usleep(300);
 		if (end(philo))
 			return (NULL);
 		if (philo->prog->pc == 1)
@@ -33,6 +40,8 @@ static void	*routine(void *arg)
 		assign_forks(philo, &first_fork, &second_fork);
 		take_fork(first_fork, philo);
 		take_fork(second_fork, philo);
+		if (end(philo))
+			return (NULL);
 		if (eat(philo))
 			return (NULL);
 		snooze(philo);

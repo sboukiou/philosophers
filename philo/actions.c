@@ -6,7 +6,7 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:45:04 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/06/28 08:45:11 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:32:03 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,22 @@ void	take_fork(pthread_mutex_t *fork, t_philo *philo)
 
 int	eat(t_philo *philo)
 {
-	if (end(philo))
+	int	mc;
+
+	if (end(philo) == true)
 	{
-		set_mutex(philo->left_fork, UNLOCK);
 		set_mutex(philo->right_fork, UNLOCK);
+		set_mutex(philo->left_fork, UNLOCK);
+		return (EXIT_FAILURE);
 	}
 	write_status("is eating", philo);
 	ft_usleep(philo->prog, philo->prog->tte);
 	set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
-	set_number(&philo->mc, get_number(&philo->mc, &philo->mc_mtx) + 1,
-		&philo->mc_mtx);
+	mc = get_number(&philo->mc, &philo->mc_mtx);
+	set_number(&philo->mc, mc + 1, &philo->mc_mtx);
 	set_mutex(philo->left_fork, UNLOCK);
 	set_mutex(philo->right_fork, UNLOCK);
-	if (philo->mc == philo->prog->mc)
+	if (mc == philo->prog->mc)
 		return (1);
 	return (0);
 }

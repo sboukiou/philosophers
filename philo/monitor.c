@@ -6,7 +6,7 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:49:27 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/06/28 08:49:32 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:21:25 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 static bool	philo_full(t_philo *philo)
 {
-	if (philo->mc == philo->prog->mc)
+	int	mc;
+
+	mc = get_number(&philo->mc, &philo->mc_mtx);
+	if (mc == philo->prog->mc)
 		return (true);
 	return (false);
 }
