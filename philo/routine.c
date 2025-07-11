@@ -21,6 +21,8 @@ static void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	while (get_bool(&philo->prog->ready, &philo->prog->ready_mtx) == false)
 		;
+	if (philo->id % 2 == 0)
+		usleep(300);
 	set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
 	while (true)
 	{
@@ -29,8 +31,6 @@ static void	*routine(void *arg)
 		if (philo->prog->pc == 1)
 			return (single_philo(philo), NULL);
 		assign_forks(philo, &first_fork, &second_fork);
-		if (philo->id % 2)
-			usleep(300);
 		take_fork(first_fork, philo);
 		take_fork(second_fork, philo);
 		if (eat(philo))

@@ -96,7 +96,7 @@ int		ft_atoi(const char *nptr);
 int		tokenize(t_prog *prog, int ac, char **av);
 
 /* Time functions --> time.c */
-int		ft_usleep(int time);
+int		ft_usleep(int time, t_philo *philo);
 time_t	get_current_time(void);
 
 /* Init function --> init.c */

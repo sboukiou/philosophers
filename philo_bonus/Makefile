@@ -3,8 +3,7 @@ CC=cc
 FLAGS=-Wall -Werror -Wextra -g3 -pthread
 RM=rm -f
 
-SOURCES=tokenize.c atoi.c main.c utils.c init.c actions.c routine.c time.c  \
-		ft_strlen.c ft_strjoin.c ft_itoa.c ft_strlcat.c ft_strlcpy.c
+SOURCES=tokenize.c atoi.c main.c utils.c init.c actions.c routine.c time.c
 OBJS=$(SOURCES:%.c=%.o)
 
 %.o: %.c

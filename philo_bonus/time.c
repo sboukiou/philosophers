@@ -33,7 +33,7 @@ time_t	get_current_time(void)
 	* @time: Time to sleep (in m-seconds)
 	* Return: 0 if succeeded or -1
 	*/
-int	ft_usleep(int time)
+int	ft_usleep(int time, t_philo *philo)
 {
 	time_t	start_time;
 	time_t	elapsed_time;
@@ -44,8 +44,10 @@ int	ft_usleep(int time)
 		return (FAIL);
 	while (elapsed_time < start_time + time)
 	{
-		usleep(400);
+		usleep(300);
 		elapsed_time = get_current_time();
+		if (elapsed_time - philo->lmt > philo->prog->ttd)
+			return (SUCCESS);
 		if (elapsed_time == FAIL)
 			return (FAIL);
 	}

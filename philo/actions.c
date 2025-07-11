@@ -42,7 +42,10 @@ void	take_fork(pthread_mutex_t *fork, t_philo *philo)
 int	eat(t_philo *philo)
 {
 	if (end(philo))
-		return (1);
+	{
+		set_mutex(philo->left_fork, UNLOCK);
+		set_mutex(philo->right_fork, UNLOCK);
+	}
 	write_status("is eating", philo);
 	ft_usleep(philo->prog, philo->prog->tte);
 	set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));

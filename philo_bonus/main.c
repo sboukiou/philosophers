@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "./philo.h"
-#include "deps.h"
 
 static int	close_semaphores(t_prog *prog)
 {
@@ -50,5 +49,6 @@ int	main(int ac, char **av)
 		while (waitpid(-1, &status, 0) > 0)
 			;
 	close_semaphores(&prog);
+	free(prog.philos);
 	return (0);
 }

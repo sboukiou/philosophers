@@ -38,7 +38,7 @@ void	eat(t_philo *philo)
 	take_fork(philo);
 	write_status(BGREEN"is eating", philo);
 	philo->lmt = get_current_time();
-	ft_usleep(philo->prog->tte);
+	ft_usleep(philo->prog->tte, philo);
 	sem_post(philo->forks);
 	sem_post(philo->forks);
 	philo->mc += 1;
@@ -50,12 +50,12 @@ void	snooze(t_philo *philo)
 {
 	ended(philo);
 	write_status(BBLUE"is sleeping", philo);
-	ft_usleep(philo->prog->tts);
+	ft_usleep(philo->prog->tts, philo);
 }
 
 void	think(t_philo *philo)
 {
 	ended(philo);
 	write_status(UPURPLE"is thinking", philo);
-	ft_usleep(1);
+	ft_usleep(1, philo);
 }

@@ -16,7 +16,7 @@ void	single_philo(t_philo *philo)
 {
 	sem_wait(philo->forks);
 	write_status(BYELLOW"has taken a fork", philo);
-	ft_usleep(philo->prog->ttd);
+	ft_usleep(philo->prog->ttd, philo);
 	write_status(BRED"died", philo);
 	exit(DEAD);
 }

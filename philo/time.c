@@ -63,7 +63,7 @@ int	ft_usleep(t_prog *prog, int time)
 	{
 		if (get_bool(&prog->end, &prog->end_mtx) == true)
 			return (SUCCESS);
-		usleep(100);
+		usleep(200);
 		elapsed_time = get_current_time(prog);
 		if (elapsed_time == FAIL)
 			return (FAIL);
