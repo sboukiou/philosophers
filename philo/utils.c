@@ -6,11 +6,28 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:53:13 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/06/28 08:53:42 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/11 23:54:59 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
+
+int	write_status(const char *status, t_philo *philo)
+{
+	time_t	now;
+
+	now = get_current_time(philo->prog);
+	set_mutex(&philo->prog->write_mtx, LOCK);
+	if (end(philo))
+	{
+		set_mutex(&philo->prog->write_mtx, UNLOCK);
+		return (0);
+	}
+	printf("[%8lu] %d %s\n", now, philo->id, status);
+	set_mutex(&philo->prog->write_mtx, UNLOCK);
+	return (0);
+}
+
 
 void	assign_forks(t_philo *philo, pthread_mutex_t **first_fork,
 		pthread_mutex_t **second_fork)
