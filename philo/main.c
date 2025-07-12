@@ -6,7 +6,7 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:49:03 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/06/28 08:49:20 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/12 01:30:38 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,13 @@ void	join_all_threads(t_prog *prog);
 int	main(int ac, char **av)
 {
 	t_prog		prog;
-	pthread_t	mthread;
 
 	if (tokenize(&prog, ac, av) == EXIT_FAILURE)
 		return (0);
 	if (init(&prog) == EXIT_FAILURE)
 		return (0);
-	if (pthread_create(&mthread, NULL, monitor, &prog) != EXIT_SUCCESS)
-		return (0);
 	if (simulation(&prog) == EXIT_FAILURE)
 		return (0);
-	pthread_join(mthread, NULL);
 	join_all_threads(&prog);
 	free(prog.philos);
 	free(prog.forks);

@@ -6,19 +6,23 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:49:38 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/07/11 17:36:16 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/12 01:12:02 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
-void	start_ritual(t_philo *philo)
+int	start_ritual(t_philo *philo)
 {
 	while (get_bool(&philo->prog->ready, &philo->prog->ready_mtx) == false)
 		;
-	if (philo->id % 2 == 0)
-		usleep(300);
 	set_time(&philo->lmt, &philo->lmt_mtx, get_current_time(philo->prog));
+	if (philo->prog->pc == 1)
+	{
+		single_philo(philo);
+		return (1);
+	}
+	return (0);
 }
 
 static void	*routine(void *arg)
@@ -28,24 +32,23 @@ static void	*routine(void *arg)
 	pthread_mutex_t	*second_fork;
 
 	philo = (t_philo *)arg;
-	start_ritual(philo);
+	if (start_ritual(philo))
+		return (NULL);
+	assign_forks(philo, &first_fork, &second_fork);
 	while (true)
 	{
 		if (philo->id % 2 != 0)
-			usleep(300);
+			usleep(280);
 		if (end(philo))
 			return (NULL);
 		if (philo->prog->pc == 1)
 			return (single_philo(philo), NULL);
-		assign_forks(philo, &first_fork, &second_fork);
-		take_fork(first_fork, philo);
-		take_fork(second_fork, philo);
-		if (end(philo))
+		if (eat(philo, first_fork, second_fork))
 			return (NULL);
-		if (eat(philo))
+		if (snooze(philo))
 			return (NULL);
-		snooze(philo);
-		think(philo);
+		if (think(philo))
+			return (NULL);
 	}
 	return (NULL);
 }
@@ -62,8 +65,6 @@ int	simulation(t_prog *prog)
 	{
 		pthread_check = pthread_create(&prog->philos[i].thread,
 				NULL, routine, prog->philos + i);
-		set_mutex(&prog->write_mtx, LOCK);
-		set_mutex(&prog->write_mtx, UNLOCK);
 		if (pthread_check != EXIT_SUCCESS)
 			return (EXIT_FAILURE);
 		i++;

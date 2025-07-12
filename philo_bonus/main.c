@@ -6,7 +6,7 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:49:03 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/06/28 08:49:20 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/12 01:34:12 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int ac, char **av)
 	int			i;
 
 	if (tokenize(&prog, ac, av) == EXIT_FAILURE)
-		return (printf("[Failed to tokenize input]\n"), EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	if (init(&prog) == EXIT_FAILURE)
 		return (printf("[Failed to init program data]\n"), EXIT_FAILURE);
 	create_processes(&prog);

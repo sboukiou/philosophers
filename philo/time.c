@@ -6,7 +6,7 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:46:21 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/07/11 23:54:34 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/12 00:33:26 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,21 @@ time_t	get_current_time(t_prog *prog)
 	* @time: Time to sleep (in m-seconds)
 	* Return: 0 if succeeded or -1
 	*/
-int	ft_usleep(t_prog *prog, int time)
+int	ft_usleep(t_philo *philo, int time)
 {
 	time_t	start_time;
 	time_t	elapsed_time;
 
-	start_time = get_current_time(prog);
-	elapsed_time = get_current_time(prog);
+	start_time = get_current_time(philo->prog);
+	elapsed_time = get_current_time(philo->prog);
 	if (elapsed_time == FAIL || start_time == FAIL)
 		return (FAIL);
 	while (elapsed_time < start_time + time)
 	{
-		if (get_bool(&prog->end, &prog->end_mtx) == true)
+		if (end(philo) || death(philo))
 			return (SUCCESS);
 		usleep(200);
-		elapsed_time = get_current_time(prog);
+		elapsed_time = get_current_time(philo->prog);
 		if (elapsed_time == FAIL)
 			return (FAIL);
 	}

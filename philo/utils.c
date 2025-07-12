@@ -6,7 +6,7 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:53:13 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/07/11 23:54:59 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/12 01:13:47 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	write_status(const char *status, t_philo *philo)
 	return (0);
 }
 
-
 void	assign_forks(t_philo *philo, pthread_mutex_t **first_fork,
 		pthread_mutex_t **second_fork)
 {
@@ -47,10 +46,11 @@ void	assign_forks(t_philo *philo, pthread_mutex_t **first_fork,
 void	single_philo(t_philo *philo)
 {
 	set_mutex(philo->left_fork, LOCK);
-	write_status(BYELLOW"has taken a fork", philo);
+	write_status("has taken a fork", philo);
 	set_mutex(philo->left_fork, UNLOCK);
-	while (get_bool(&philo->prog->end, &philo->prog->end_mtx) == false)
-		;
+	ft_usleep(philo, philo->prog->ttd);
+	write_status("died", philo);
+	return ;
 }
 
 bool	end(t_philo *philo)
@@ -59,5 +59,23 @@ bool	end(t_philo *philo)
 		return (true);
 	if (get_bool(&philo->prog->end, &philo->prog->end_mtx) == true)
 		return (true);
+	return (false);
+}
+
+bool	death(t_philo *philo)
+{
+	time_t	now;
+	time_t	lmt;
+
+	if (!philo)
+		return (true);
+	now = get_current_time(philo->prog);
+	lmt = get_time(&philo->lmt, &philo->lmt_mtx);
+	if (now - lmt > philo->prog->ttd)
+	{
+		write_status("died", philo);
+		set_bool(&philo->prog->end, true, &philo->prog->end_mtx);
+		return (true);
+	}
 	return (false);
 }

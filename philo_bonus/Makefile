@@ -1,6 +1,6 @@
 NAME=philo_bonus
 CC=cc
-FLAGS=-Wall -Werror -Wextra -g3 -pthread
+FLAGS=-Wall -Werror -Wextra -g3 -pthread -fsanitize=thread
 RM=rm -f
 
 SOURCES=tokenize.c atoi.c main.c utils.c init.c actions.c routine.c time.c

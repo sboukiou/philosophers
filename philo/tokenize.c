@@ -6,13 +6,13 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:51:42 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/06/28 08:53:07 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/12 01:35:49 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
-static int	check_input(t_prog *prog, int ac)
+static int	check_input(t_prog *prog, int ac, char **av)
 {
 	if (!prog)
 	{
@@ -25,22 +25,27 @@ static int	check_input(t_prog *prog, int ac)
 		printf(BYELLOW"Usage: ./philo pc tte tts ttd [mc]\n"RESET);
 		return (EXIT_FAILURE);
 	}
+	if (ft_atoi(av[1]) == 0)
+	{
+		printf(UPURPLE"No philosophers provided, No dinner served\n"RESET);
+		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 
 int	tokenize(t_prog *prog, int ac, char **av)
 {
-	if (check_input(prog, ac) == EXIT_FAILURE)
+	if (check_input(prog, ac, av) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (ft_atoi(av[1]) < 1 || ft_atoi(av[2]) < 1
-		|| ft_atoi(av[3]) < 1 || ft_atoi(av[4]) < 2)
+	if (ft_atoi(av[1]) < 0 || ft_atoi(av[2]) < 1
+		|| ft_atoi(av[3]) < 1 || ft_atoi(av[4]) < 1)
 	{
-		printf(BRED"Invalid arguments given ! Try again"RESET);
+		printf(BRED"Invalid arguments given ! Try again\n"RESET);
 		return (EXIT_FAILURE);
 	}
 	if (ac == 6 && ft_atoi(av[5]) < 1)
 	{
-		printf(BRED"Invalid arguments given ! Try again"RESET);
+		printf(BRED"Invalid arguments given ! Try again\n"RESET);
 		return (EXIT_FAILURE);
 	}
 	prog->pc = ft_atoi(av[1]);

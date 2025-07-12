@@ -6,7 +6,7 @@
 /*   By: sboukiou <sboukiou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 08:43:41 by sboukiou          #+#    #+#             */
-/*   Updated: 2025/06/28 08:54:45 by sboukiou         ###   ########.fr       */
+/*   Updated: 2025/07/12 01:08:54 by sboukiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int		get_number(int *target, pthread_mutex_t *mtx);
 void	set_number(int *target, int value, pthread_mutex_t *mtx);
 
 /* Time functions --> time.c */
-int		ft_usleep(t_prog *prog, int time);
+int		ft_usleep(t_philo *philo, int time);
 time_t	get_current_time(t_prog *prog);
 void	set_time(time_t *target, pthread_mutex_t *mtx, time_t val);
 time_t	get_time(time_t *target, pthread_mutex_t *mtx);
@@ -102,14 +102,16 @@ void	*monitor(void *arg);
 
 /* Philo routine utils utils.c */
 void	single_philo(t_philo *philo);
-void	take_fork(pthread_mutex_t *fork, t_philo *philo);
+int		take_fork(pthread_mutex_t *fork, t_philo *philo);
 void	assign_forks(t_philo *philo, pthread_mutex_t **first_fork,
 			pthread_mutex_t **second_fork);
+/* Death or end checkers */
 bool	end(t_philo *philo);
+bool	death(t_philo *philo);
 
 /* Philo actions --> actions.c */
 int		write_status(const char *status, t_philo *philo);
-int		eat(t_philo *philo);
-void	think(t_philo *philo);
-void	snooze(t_philo *philo);
+int		eat(t_philo *philo, pthread_mutex_t *first, pthread_mutex_t *second);
+int		think(t_philo *philo);
+int		snooze(t_philo *philo);
 #endif /* PHILO_H */
